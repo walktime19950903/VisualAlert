@@ -1,0 +1,574 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 48;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		CEBB72801FBA9CAE00B3EDBA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB727F1FBA9CAE00B3EDBA /* AppDelegate.swift */; };
+		CEBB72821FBA9CAE00B3EDBA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB72811FBA9CAE00B3EDBA /* ViewController.swift */; };
+		CEBB72851FBA9CAE00B3EDBA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEBB72831FBA9CAE00B3EDBA /* Main.storyboard */; };
+		CEBB72881FBA9CAE00B3EDBA /* VisualAlert.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CEBB72861FBA9CAE00B3EDBA /* VisualAlert.xcdatamodeld */; };
+		CEBB728A1FBA9CAE00B3EDBA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEBB72891FBA9CAE00B3EDBA /* Assets.xcassets */; };
+		CEBB728D1FBA9CAE00B3EDBA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEBB728B1FBA9CAE00B3EDBA /* LaunchScreen.storyboard */; };
+		CEBB72981FBA9CAF00B3EDBA /* VisualAlertTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB72971FBA9CAF00B3EDBA /* VisualAlertTests.swift */; };
+		CEBB72A31FBA9CAF00B3EDBA /* VisualAlertUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB72A21FBA9CAF00B3EDBA /* VisualAlertUITests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		CEBB72941FBA9CAF00B3EDBA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CEBB72741FBA9CAE00B3EDBA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CEBB727B1FBA9CAE00B3EDBA;
+			remoteInfo = VisualAlert;
+		};
+		CEBB729F1FBA9CAF00B3EDBA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CEBB72741FBA9CAE00B3EDBA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CEBB727B1FBA9CAE00B3EDBA;
+			remoteInfo = VisualAlert;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		CEBB727C1FBA9CAE00B3EDBA /* VisualAlert.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VisualAlert.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CEBB727F1FBA9CAE00B3EDBA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		CEBB72811FBA9CAE00B3EDBA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		CEBB72841FBA9CAE00B3EDBA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		CEBB72871FBA9CAE00B3EDBA /* VisualAlert.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = VisualAlert.xcdatamodel; sourceTree = "<group>"; };
+		CEBB72891FBA9CAE00B3EDBA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		CEBB728C1FBA9CAE00B3EDBA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		CEBB728E1FBA9CAE00B3EDBA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CEBB72931FBA9CAF00B3EDBA /* VisualAlertTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VisualAlertTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CEBB72971FBA9CAF00B3EDBA /* VisualAlertTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualAlertTests.swift; sourceTree = "<group>"; };
+		CEBB72991FBA9CAF00B3EDBA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CEBB729E1FBA9CAF00B3EDBA /* VisualAlertUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VisualAlertUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CEBB72A21FBA9CAF00B3EDBA /* VisualAlertUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualAlertUITests.swift; sourceTree = "<group>"; };
+		CEBB72A41FBA9CAF00B3EDBA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		CEBB72791FBA9CAE00B3EDBA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CEBB72901FBA9CAF00B3EDBA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CEBB729B1FBA9CAF00B3EDBA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		CEBB72731FBA9CAD00B3EDBA = {
+			isa = PBXGroup;
+			children = (
+				CEBB727E1FBA9CAE00B3EDBA /* VisualAlert */,
+				CEBB72961FBA9CAF00B3EDBA /* VisualAlertTests */,
+				CEBB72A11FBA9CAF00B3EDBA /* VisualAlertUITests */,
+				CEBB727D1FBA9CAE00B3EDBA /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		CEBB727D1FBA9CAE00B3EDBA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CEBB727C1FBA9CAE00B3EDBA /* VisualAlert.app */,
+				CEBB72931FBA9CAF00B3EDBA /* VisualAlertTests.xctest */,
+				CEBB729E1FBA9CAF00B3EDBA /* VisualAlertUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		CEBB727E1FBA9CAE00B3EDBA /* VisualAlert */ = {
+			isa = PBXGroup;
+			children = (
+				CEBB727F1FBA9CAE00B3EDBA /* AppDelegate.swift */,
+				CEBB72811FBA9CAE00B3EDBA /* ViewController.swift */,
+				CEBB72831FBA9CAE00B3EDBA /* Main.storyboard */,
+				CEBB72891FBA9CAE00B3EDBA /* Assets.xcassets */,
+				CEBB728B1FBA9CAE00B3EDBA /* LaunchScreen.storyboard */,
+				CEBB728E1FBA9CAE00B3EDBA /* Info.plist */,
+				CEBB72861FBA9CAE00B3EDBA /* VisualAlert.xcdatamodeld */,
+			);
+			path = VisualAlert;
+			sourceTree = "<group>";
+		};
+		CEBB72961FBA9CAF00B3EDBA /* VisualAlertTests */ = {
+			isa = PBXGroup;
+			children = (
+				CEBB72971FBA9CAF00B3EDBA /* VisualAlertTests.swift */,
+				CEBB72991FBA9CAF00B3EDBA /* Info.plist */,
+			);
+			path = VisualAlertTests;
+			sourceTree = "<group>";
+		};
+		CEBB72A11FBA9CAF00B3EDBA /* VisualAlertUITests */ = {
+			isa = PBXGroup;
+			children = (
+				CEBB72A21FBA9CAF00B3EDBA /* VisualAlertUITests.swift */,
+				CEBB72A41FBA9CAF00B3EDBA /* Info.plist */,
+			);
+			path = VisualAlertUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		CEBB727B1FBA9CAE00B3EDBA /* VisualAlert */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CEBB72A71FBA9CAF00B3EDBA /* Build configuration list for PBXNativeTarget "VisualAlert" */;
+			buildPhases = (
+				CEBB72781FBA9CAE00B3EDBA /* Sources */,
+				CEBB72791FBA9CAE00B3EDBA /* Frameworks */,
+				CEBB727A1FBA9CAE00B3EDBA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = VisualAlert;
+			productName = VisualAlert;
+			productReference = CEBB727C1FBA9CAE00B3EDBA /* VisualAlert.app */;
+			productType = "com.apple.product-type.application";
+		};
+		CEBB72921FBA9CAF00B3EDBA /* VisualAlertTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CEBB72AA1FBA9CAF00B3EDBA /* Build configuration list for PBXNativeTarget "VisualAlertTests" */;
+			buildPhases = (
+				CEBB728F1FBA9CAF00B3EDBA /* Sources */,
+				CEBB72901FBA9CAF00B3EDBA /* Frameworks */,
+				CEBB72911FBA9CAF00B3EDBA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CEBB72951FBA9CAF00B3EDBA /* PBXTargetDependency */,
+			);
+			name = VisualAlertTests;
+			productName = VisualAlertTests;
+			productReference = CEBB72931FBA9CAF00B3EDBA /* VisualAlertTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		CEBB729D1FBA9CAF00B3EDBA /* VisualAlertUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CEBB72AD1FBA9CAF00B3EDBA /* Build configuration list for PBXNativeTarget "VisualAlertUITests" */;
+			buildPhases = (
+				CEBB729A1FBA9CAF00B3EDBA /* Sources */,
+				CEBB729B1FBA9CAF00B3EDBA /* Frameworks */,
+				CEBB729C1FBA9CAF00B3EDBA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CEBB72A01FBA9CAF00B3EDBA /* PBXTargetDependency */,
+			);
+			name = VisualAlertUITests;
+			productName = VisualAlertUITests;
+			productReference = CEBB729E1FBA9CAF00B3EDBA /* VisualAlertUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		CEBB72741FBA9CAE00B3EDBA /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0900;
+				LastUpgradeCheck = 0900;
+				ORGANIZATIONNAME = "ryousuke Takahashi";
+				TargetAttributes = {
+					CEBB727B1FBA9CAE00B3EDBA = {
+						CreatedOnToolsVersion = 9.0.1;
+						ProvisioningStyle = Automatic;
+					};
+					CEBB72921FBA9CAF00B3EDBA = {
+						CreatedOnToolsVersion = 9.0.1;
+						ProvisioningStyle = Automatic;
+						TestTargetID = CEBB727B1FBA9CAE00B3EDBA;
+					};
+					CEBB729D1FBA9CAF00B3EDBA = {
+						CreatedOnToolsVersion = 9.0.1;
+						ProvisioningStyle = Automatic;
+						TestTargetID = CEBB727B1FBA9CAE00B3EDBA;
+					};
+				};
+			};
+			buildConfigurationList = CEBB72771FBA9CAE00B3EDBA /* Build configuration list for PBXProject "VisualAlert" */;
+			compatibilityVersion = "Xcode 8.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = CEBB72731FBA9CAD00B3EDBA;
+			productRefGroup = CEBB727D1FBA9CAE00B3EDBA /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				CEBB727B1FBA9CAE00B3EDBA /* VisualAlert */,
+				CEBB72921FBA9CAF00B3EDBA /* VisualAlertTests */,
+				CEBB729D1FBA9CAF00B3EDBA /* VisualAlertUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		CEBB727A1FBA9CAE00B3EDBA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CEBB728D1FBA9CAE00B3EDBA /* LaunchScreen.storyboard in Resources */,
+				CEBB728A1FBA9CAE00B3EDBA /* Assets.xcassets in Resources */,
+				CEBB72851FBA9CAE00B3EDBA /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CEBB72911FBA9CAF00B3EDBA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CEBB729C1FBA9CAF00B3EDBA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		CEBB72781FBA9CAE00B3EDBA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CEBB72821FBA9CAE00B3EDBA /* ViewController.swift in Sources */,
+				CEBB72881FBA9CAE00B3EDBA /* VisualAlert.xcdatamodeld in Sources */,
+				CEBB72801FBA9CAE00B3EDBA /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CEBB728F1FBA9CAF00B3EDBA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CEBB72981FBA9CAF00B3EDBA /* VisualAlertTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CEBB729A1FBA9CAF00B3EDBA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CEBB72A31FBA9CAF00B3EDBA /* VisualAlertUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		CEBB72951FBA9CAF00B3EDBA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CEBB727B1FBA9CAE00B3EDBA /* VisualAlert */;
+			targetProxy = CEBB72941FBA9CAF00B3EDBA /* PBXContainerItemProxy */;
+		};
+		CEBB72A01FBA9CAF00B3EDBA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CEBB727B1FBA9CAE00B3EDBA /* VisualAlert */;
+			targetProxy = CEBB729F1FBA9CAF00B3EDBA /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		CEBB72831FBA9CAE00B3EDBA /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CEBB72841FBA9CAE00B3EDBA /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		CEBB728B1FBA9CAE00B3EDBA /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CEBB728C1FBA9CAE00B3EDBA /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		CEBB72A51FBA9CAF00B3EDBA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		CEBB72A61FBA9CAF00B3EDBA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		CEBB72A81FBA9CAF00B3EDBA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = VisualAlert/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ryosuketakahashi.VisualAlert;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		CEBB72A91FBA9CAF00B3EDBA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = VisualAlert/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ryosuketakahashi.VisualAlert;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		CEBB72AB1FBA9CAF00B3EDBA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = VisualAlertTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ryosuketakahashi.VisualAlertTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/VisualAlert.app/VisualAlert";
+			};
+			name = Debug;
+		};
+		CEBB72AC1FBA9CAF00B3EDBA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = VisualAlertTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ryosuketakahashi.VisualAlertTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/VisualAlert.app/VisualAlert";
+			};
+			name = Release;
+		};
+		CEBB72AE1FBA9CAF00B3EDBA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = VisualAlertUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ryosuketakahashi.VisualAlertUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = VisualAlert;
+			};
+			name = Debug;
+		};
+		CEBB72AF1FBA9CAF00B3EDBA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = VisualAlertUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ryosuketakahashi.VisualAlertUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = VisualAlert;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		CEBB72771FBA9CAE00B3EDBA /* Build configuration list for PBXProject "VisualAlert" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CEBB72A51FBA9CAF00B3EDBA /* Debug */,
+				CEBB72A61FBA9CAF00B3EDBA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CEBB72A71FBA9CAF00B3EDBA /* Build configuration list for PBXNativeTarget "VisualAlert" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CEBB72A81FBA9CAF00B3EDBA /* Debug */,
+				CEBB72A91FBA9CAF00B3EDBA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CEBB72AA1FBA9CAF00B3EDBA /* Build configuration list for PBXNativeTarget "VisualAlertTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CEBB72AB1FBA9CAF00B3EDBA /* Debug */,
+				CEBB72AC1FBA9CAF00B3EDBA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CEBB72AD1FBA9CAF00B3EDBA /* Build configuration list for PBXNativeTarget "VisualAlertUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CEBB72AE1FBA9CAF00B3EDBA /* Debug */,
+				CEBB72AF1FBA9CAF00B3EDBA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		CEBB72861FBA9CAE00B3EDBA /* VisualAlert.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				CEBB72871FBA9CAE00B3EDBA /* VisualAlert.xcdatamodel */,
+			);
+			currentVersion = CEBB72871FBA9CAE00B3EDBA /* VisualAlert.xcdatamodel */;
+			path = VisualAlert.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = CEBB72741FBA9CAE00B3EDBA /* Project object */;
+}
