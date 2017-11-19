@@ -1,6 +1,0 @@
-framework module Pods_VisualAlertTests {
-  umbrella header "Pods-VisualAlertTests-umbrella.h"
-
-  export *
-  module * { export * }
-}

@@ -7,10 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3ACA2CA8E09646CD9A5AC40C /* Pods_VisualAlertTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10DA9CBEA50B0A4FD0BA9FEE /* Pods_VisualAlertTests.framework */; };
-		532148BBD4676004E711EFA1 /* Pods_VisualAlertUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B04BDE82ED46194B549FB614 /* Pods_VisualAlertUITests.framework */; };
-		ABDCCD45EBFC003BCCFD2C35 /* Pods_VisualAlert.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB32601ED799081AC80EB807 /* Pods_VisualAlert.framework */; };
 		CE5435CF1FBDC82F0035A4B0 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5435CE1FBDC82F0035A4B0 /* TableViewController.swift */; };
+		CE5436141FBE92240035A4B0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5436131FBE92240035A4B0 /* ViewController.swift */; };
+		CE6C722D1FC04ADF00259FB2 /* cameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6C722C1FC04ADF00259FB2 /* cameraViewController.swift */; };
 		CEBB72801FBA9CAE00B3EDBA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB727F1FBA9CAE00B3EDBA /* AppDelegate.swift */; };
 		CEBB72851FBA9CAE00B3EDBA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEBB72831FBA9CAE00B3EDBA /* Main.storyboard */; };
 		CEBB72881FBA9CAE00B3EDBA /* VisualAlert.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CEBB72861FBA9CAE00B3EDBA /* VisualAlert.xcdatamodeld */; };
@@ -38,14 +37,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		10DA9CBEA50B0A4FD0BA9FEE /* Pods_VisualAlertTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VisualAlertTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		29573C623986994526E5268A /* Pods-VisualAlert.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VisualAlert.release.xcconfig"; path = "Pods/Target Support Files/Pods-VisualAlert/Pods-VisualAlert.release.xcconfig"; sourceTree = "<group>"; };
-		894BFCF09DC8486CBE68376F /* Pods-VisualAlertUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VisualAlertUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-VisualAlertUITests/Pods-VisualAlertUITests.release.xcconfig"; sourceTree = "<group>"; };
-		8CBFBEA53789F6F456947DF3 /* Pods-VisualAlert.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VisualAlert.debug.xcconfig"; path = "Pods/Target Support Files/Pods-VisualAlert/Pods-VisualAlert.debug.xcconfig"; sourceTree = "<group>"; };
-		B04BDE82ED46194B549FB614 /* Pods_VisualAlertUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VisualAlertUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		B5C2C9891801ABE1BA41C7EA /* Pods-VisualAlertTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VisualAlertTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-VisualAlertTests/Pods-VisualAlertTests.debug.xcconfig"; sourceTree = "<group>"; };
-		BC1467B438E2BF6428EA7E9E /* Pods-VisualAlertUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VisualAlertUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-VisualAlertUITests/Pods-VisualAlertUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		CE5435CE1FBDC82F0035A4B0 /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
+		CE5436131FBE92240035A4B0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = /Users/user/Documents/VisualAlert/VisualAlert/ViewController.swift; sourceTree = "<absolute>"; };
+		CE6C722C1FC04ADF00259FB2 /* cameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cameraViewController.swift; sourceTree = "<group>"; };
 		CEBB727C1FBA9CAE00B3EDBA /* VisualAlert.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VisualAlert.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEBB727F1FBA9CAE00B3EDBA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CEBB72841FBA9CAE00B3EDBA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -59,8 +53,6 @@
 		CEBB729E1FBA9CAF00B3EDBA /* VisualAlertUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VisualAlertUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEBB72A21FBA9CAF00B3EDBA /* VisualAlertUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualAlertUITests.swift; sourceTree = "<group>"; };
 		CEBB72A41FBA9CAF00B3EDBA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		DB32601ED799081AC80EB807 /* Pods_VisualAlert.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VisualAlert.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		FCFC2906ECEE9D261880FCAA /* Pods-VisualAlertTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VisualAlertTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-VisualAlertTests/Pods-VisualAlertTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,7 +60,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ABDCCD45EBFC003BCCFD2C35 /* Pods_VisualAlert.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -76,7 +67,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3ACA2CA8E09646CD9A5AC40C /* Pods_VisualAlertTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -84,36 +74,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				532148BBD4676004E711EFA1 /* Pods_VisualAlertUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		87DF6AE28D1D857F51C68DF7 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				DB32601ED799081AC80EB807 /* Pods_VisualAlert.framework */,
-				10DA9CBEA50B0A4FD0BA9FEE /* Pods_VisualAlertTests.framework */,
-				B04BDE82ED46194B549FB614 /* Pods_VisualAlertUITests.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		AAD56E78340051E89C2E38D8 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				8CBFBEA53789F6F456947DF3 /* Pods-VisualAlert.debug.xcconfig */,
-				29573C623986994526E5268A /* Pods-VisualAlert.release.xcconfig */,
-				B5C2C9891801ABE1BA41C7EA /* Pods-VisualAlertTests.debug.xcconfig */,
-				FCFC2906ECEE9D261880FCAA /* Pods-VisualAlertTests.release.xcconfig */,
-				BC1467B438E2BF6428EA7E9E /* Pods-VisualAlertUITests.debug.xcconfig */,
-				894BFCF09DC8486CBE68376F /* Pods-VisualAlertUITests.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		CEBB72731FBA9CAD00B3EDBA = {
 			isa = PBXGroup;
 			children = (
@@ -121,8 +87,6 @@
 				CEBB72961FBA9CAF00B3EDBA /* VisualAlertTests */,
 				CEBB72A11FBA9CAF00B3EDBA /* VisualAlertUITests */,
 				CEBB727D1FBA9CAE00B3EDBA /* Products */,
-				AAD56E78340051E89C2E38D8 /* Pods */,
-				87DF6AE28D1D857F51C68DF7 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -139,7 +103,9 @@
 		CEBB727E1FBA9CAE00B3EDBA /* VisualAlert */ = {
 			isa = PBXGroup;
 			children = (
+				CE5436131FBE92240035A4B0 /* ViewController.swift */,
 				CEBB727F1FBA9CAE00B3EDBA /* AppDelegate.swift */,
+				CE6C722C1FC04ADF00259FB2 /* cameraViewController.swift */,
 				CE5435CE1FBDC82F0035A4B0 /* TableViewController.swift */,
 				CEBB72831FBA9CAE00B3EDBA /* Main.storyboard */,
 				CEBB72891FBA9CAE00B3EDBA /* Assets.xcassets */,
@@ -175,12 +141,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = CEBB72A71FBA9CAF00B3EDBA /* Build configuration list for PBXNativeTarget "VisualAlert" */;
 			buildPhases = (
-				7C45EBEFC6DCEB2E3518B0B8 /* [CP] Check Pods Manifest.lock */,
 				CEBB72781FBA9CAE00B3EDBA /* Sources */,
 				CEBB72791FBA9CAE00B3EDBA /* Frameworks */,
 				CEBB727A1FBA9CAE00B3EDBA /* Resources */,
-				43E2DE15274D86C34A58A8DF /* [CP] Embed Pods Frameworks */,
-				97083AAA3E1C2BAE0ED05813 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -322,59 +285,6 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-VisualAlertTests/Pods-VisualAlertTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		43E2DE15274D86C34A58A8DF /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-VisualAlert/Pods-VisualAlert-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/FontAwesome.swift/FontAwesome_swift.framework",
-				"${BUILT_PRODUCTS_DIR}/GuillotineMenu/GuillotineMenu.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FontAwesome_swift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GuillotineMenu.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-VisualAlert/Pods-VisualAlert-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		7C45EBEFC6DCEB2E3518B0B8 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-VisualAlert-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		97083AAA3E1C2BAE0ED05813 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-VisualAlert/Pods-VisualAlert-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		CF0A916C5639EA841F682569 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -465,6 +375,8 @@
 			files = (
 				CEBB72881FBA9CAE00B3EDBA /* VisualAlert.xcdatamodeld in Sources */,
 				CE5435CF1FBDC82F0035A4B0 /* TableViewController.swift in Sources */,
+				CE6C722D1FC04ADF00259FB2 /* cameraViewController.swift in Sources */,
+				CE5436141FBE92240035A4B0 /* ViewController.swift in Sources */,
 				CEBB72801FBA9CAE00B3EDBA /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -629,11 +541,12 @@
 		};
 		CEBB72A81FBA9CAF00B3EDBA /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8CBFBEA53789F6F456947DF3 /* Pods-VisualAlert.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = ZGJ9W5QN28;
 				INFOPLIST_FILE = VisualAlert/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ryosuketakahashi.VisualAlert;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -644,11 +557,12 @@
 		};
 		CEBB72A91FBA9CAF00B3EDBA /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 29573C623986994526E5268A /* Pods-VisualAlert.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = ZGJ9W5QN28;
 				INFOPLIST_FILE = VisualAlert/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ryosuketakahashi.VisualAlert;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -659,7 +573,6 @@
 		};
 		CEBB72AB1FBA9CAF00B3EDBA /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B5C2C9891801ABE1BA41C7EA /* Pods-VisualAlertTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -676,7 +589,6 @@
 		};
 		CEBB72AC1FBA9CAF00B3EDBA /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FCFC2906ECEE9D261880FCAA /* Pods-VisualAlertTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -693,7 +605,6 @@
 		};
 		CEBB72AE1FBA9CAF00B3EDBA /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BC1467B438E2BF6428EA7E9E /* Pods-VisualAlertUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -709,7 +620,6 @@
 		};
 		CEBB72AF1FBA9CAF00B3EDBA /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 894BFCF09DC8486CBE68376F /* Pods-VisualAlertUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
