@@ -152,13 +152,6 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
         kurikaeshiPicker.delegate = self as! UIPickerViewDelegate
         kurikaeshiPicker.dataSource = self as! UIPickerViewDataSource
             
-            print("二枚め表示されたよ")
-            print("受け取った行番号\(passedIndex)")
-            
-        //表示したい文字の設定
-        var dic = contentTitle[indexPath.row] as! NSDictionary
-        titleLabel.text = dic["title"] as! String
-        memoLabel.text = dic["memo"] as! String
         
             }
     

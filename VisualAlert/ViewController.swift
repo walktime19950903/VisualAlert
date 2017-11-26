@@ -103,15 +103,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         performSegue(withIdentifier: "showDetail", sender: nil)
         
     }
-    
-    func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! customCell
-        
-        //表示したい文字の設定
-        var dic = contentTitle[indexPath.row] as! NSDictionary
-        cell.titleLabel.text = dic["title"] as! String
-        cell.memoLabel.text = dic["memo"] as! String
-    }
+  
     
     //セグエを使って、
     override func prepare(for segue: UIStoryboardSegue,sender: Any?) {
@@ -124,10 +116,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
             
             let TableViewController:TableViewController = segue.destination as! TableViewController
             
-            // 変数:遷移先ViewController型 = segue.destinationViewController as 遷移先ViewController型
-            // segue.destinationViewController は遷移先のViewController
-            
-            TableViewController.sendText = cell.memoLabel.text
+
         }
         
     }

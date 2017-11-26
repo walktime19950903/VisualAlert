@@ -2,6 +2,7 @@
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="13533" systemVersion="16G1036" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="TODO" representedClassName=".TODO" syncable="YES">
         <attribute name="color" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="image" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="kurikaeshi" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="memo" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="saveDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
@@ -10,6 +11,6 @@
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="TODO" positionX="-54" positionY="-9" width="128" height="150"/>
+        <element name="TODO" positionX="-54" positionY="-9" width="128" height="165"/>
     </elements>
 </model>
