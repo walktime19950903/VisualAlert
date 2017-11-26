@@ -10,9 +10,10 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
     }
     
     
-    var sendText:String = ""
-    var selectDate = String()
+ 
     var contentTitle:[NSDictionary] = []
+    var param = ""
+    var param2 = ""
     
     @IBOutlet weak var titleLabel: UITextField! //タイトル
     @IBOutlet weak var txtView: UITextView! //メモ欄
@@ -85,8 +86,8 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
             
         }
         
-        //ひとつ前の画面に戻る
-        self.navigationController?.popViewController(animated: true)
+        //最初の画面に戻る
+        self.navigationController?.popToRootViewController(animated: true)
 
     }
     
@@ -148,6 +149,12 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
         super.viewDidLoad()
         read()
         datePickerChanged()
+        
+        print("TableViewController表示されたよ")
+        print("受け取った行番号\(passedIndex)")
+        
+        titleLabel.text = param
+        txtView.text = param2
         
         kurikaeshiPicker.delegate = self as! UIPickerViewDelegate
         kurikaeshiPicker.dataSource = self as! UIPickerViewDataSource

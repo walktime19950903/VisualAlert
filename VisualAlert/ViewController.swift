@@ -9,7 +9,8 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     var selectDate = String()
     var selectedIndex = -1
     
-    var result : String?
+    var cellTitle:String? = ""
+    var cellMemo:String? = ""
     
     //TODO(内容)を格納する配列TableView 表示用
     var contentTitle:[NSDictionary] = []
@@ -18,6 +19,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     override func viewDidLoad() {
         super.viewDidLoad()
         read()
+    
     }
     
     //すでに存在するデータの読み込み処理
@@ -69,6 +71,27 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         
     }
     
+    //セルをスライドした時の処理
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            contentTitle.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        }
+    }
+    
+    //ボタンの文字や背景色を変えたい場合の設定
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        
+        let deleteButton: UITableViewRowAction = UITableViewRowAction(style: .normal, title: "削除") { (action, index) -> Void in
+            self.contentTitle.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        }
+        deleteButton.backgroundColor = UIColor.red
+        
+        return [deleteButton]
+    }
+
+    
     
     //MARK:TableView用の処理
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -85,9 +108,6 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         cell.titleLabel.text = dic["title"] as! String
         cell.memoLabel.text = dic["memo"] as! String
         
-        //画像
-//        cell.cellImage.image = UIImage(named:"sample.png")
-        
         //文字を設定したセルを返す
         return cell
     }
@@ -98,6 +118,22 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         
         //選択された行番号を保存
         selectedIndex = indexPath.row
+        
+        //文字列を表示するセルの取得（セルの再利用）
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! customCell
+        
+        //表示したい文字の設定
+        var dic = contentTitle[indexPath.row] as! NSDictionary
+        cell.titleLabel.text = dic["title"] as! String
+        cell.memoLabel.text = dic["memo"] as! String
+        
+        
+        
+        cellTitle = cell.titleLabel.text
+        cellMemo = cell.memoLabel.text
+        
+        print(cellTitle)
+        
         
         //セグエの名前を指定して画面遷移処理を発動
         performSegue(withIdentifier: "showDetail", sender: nil)
@@ -112,23 +148,14 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
 //        //次の画面のプロパティ（メンバ変数）passedIndexに選択された行番号を渡す
 //        dvc.passedIndex = selectedIndex
         
-        if segue.identifier == "showDatail" {
-            
-            let TableViewController:TableViewController = segue.destination as! TableViewController
-            
-
+        if(segue.identifier == "showDetail") {
+            var vc = segue.destination as! TableViewController
+            vc.param = cellTitle!
+            vc.param2 = cellMemo!
         }
-        
+
     }
-    
-//    //セグエを使って遷移する時発動
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//
-//        var dvc:TableViewController = segue.destination as! TableViewController
-//
-//        dvc.selectDate = selectDate
-//
-//    }
+
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
