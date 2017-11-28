@@ -34,19 +34,6 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
     
     
     @IBAction func tapImage(_ sender: UITapGestureRecognizer) {
-    //        // カメラロールが利用可能か？
-//        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
-//            // 写真を選ぶビュー
-//            let pickerView = UIImagePickerController()
-//            // 写真の選択元をカメラロールにする
-//            // 「.camera」にすればカメラを起動できる
-//            pickerView.sourceType = .photoLibrary
-//            // デリゲート
-//            pickerView.delegate = self as! UIImagePickerControllerDelegate & UINavigationControllerDelegate
-//            // ビューに表示
-//            self.present(pickerView, animated: true)
-//        }
-        
         if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.photoLibrary) {    //追記
             //写真ライブラリ(カメラロール)表示用のViewControllerを宣言
             let controller = UIImagePickerController()
@@ -58,34 +45,13 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
             controller.allowsEditing = true
             //新たに追加したカメラロール表示ViewControllerをpresentViewControllerにする
             self.present(controller, animated: true, completion: nil)
-            
         }
-        
     }
-    
-    
-    
-    
-    
+
     
     // 写真を選んだ後に呼ばれる処理
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         
-//        // 選択した写真を取得する
-//        let image = info[UIImagePickerControllerOriginalImage] as! UIImage
-//        // ビューに表示する
-//        self.pictureImageView.image = image
-//        // 写真を選ぶビューを引っ込める
-//        self.dismiss(animated: true)
-        
-        
-//        let assetURL:AnyObject = info[UIImagePickerControllerReferenceURL]! as AnyObject
-//
-//        let strURL:String = assetURL.description
-//
-//        print(strURL)
-//
-//
         //写真を文字列に変換
         let assetURL:AnyObject = info[UIImagePickerControllerReferenceURL]! as AnyObject
         
@@ -93,7 +59,6 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
         
         //メンバ変数に写真のURLを保存
         letterImage = strURL
-        
         print("写真のURL:\(letterImage)")
         
         // ユーザーデフォルトを用意する
@@ -105,20 +70,20 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
         // 即反映させる
         myDefault.synchronize()
         
-        //        if strURL != nil{
-        
-//        let url = URL(string: strURL as String!)
-//        let fetchResult: PHFetchResult = PHAsset.fetchAssets(withALAssetURLs: [url!], options: nil)
-//        let asset: PHAsset = (fetchResult.firstObject! as PHAsset)
-//        let manager: PHImageManager = PHImageManager()
-//        manager.requestImage(for: asset,targetSize: CGSize(width: 128, height: 122),contentMode: .aspectFill,options: nil) { (image, info) -> Void in
-//            self.pictureImageView.image = image
-//        }
+                if strURL != nil{
+        let url = URL(string: strURL as String!)
+        let fetchResult: PHFetchResult = PHAsset.fetchAssets(withALAssetURLs: [url!], options: nil)
+        let asset: PHAsset = (fetchResult.firstObject! as PHAsset)
+        let manager: PHImageManager = PHImageManager()
+        manager.requestImage(for: asset,targetSize: CGSize(width: 128, height: 122),contentMode: .aspectFill,options: nil) { (image, info) -> Void in
+            self.pictureImageView.image = image
+        }
         pictureImageView.image = info[UIImagePickerControllerOriginalImage]! as! UIImage
         //閉じる処理
         picker.dismiss(animated: true, completion: nil)
-    
+        }
     }
+    
     
     //完了ボタンが押された時発動
     @IBAction func tapSave(_ sender: UIBarButtonItem) {
@@ -135,6 +100,8 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
         //エンティティにレコード（行）を挿入するためのオブジェクトを作成
         let newRecord = NSManagedObject(entity: ToDo!, insertInto: viewContext)
     
+        
+        
         //値のセット
         newRecord.setValue(txtView.text, forKey: "memo")  //title列に文字をセット
         newRecord.setValue(Date(), forKey: "saveDate")      //saveDate列に現在日時をセット
@@ -142,13 +109,16 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
         newRecord.setValue(letterImage, forKey:"image")
         newRecord.setValue(Date(), forKey: "kurikaeshi")
         newRecord.setValue(Date(), forKey: "time")
+        
+        
     
         //どのエンティティからデータを取得してくるか設定（ToDoエンティティ）
         let query:NSFetchRequest<TODO> = TODO.fetchRequest()
+        
         //絞り込み検索（ここを追加！！！！！！）---------------------------------
         //絞り込みの条件　saveDate = %@ のsaveDateはattribute名
-//        let saveDatePredicate = NSPredicate(format: "saveDate = %@", selectDate as CVarArg)
-//        query.predicate = saveDatePredicate
+        let saveDatePredicate = NSPredicate(format: "saveDate = %@", selectDate as CVarArg)
+        query.predicate = saveDatePredicate
         
         //----------------------------------------------------------------
         
@@ -167,9 +137,9 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
                 //更新したいデータのセット
                 record.setValue(titleLabel.text, forKey: "title")
                 record.setValue(txtView.text, forKey: "memo")
-                
-            
-            try viewContext.save()
+        
+                //更新を即時保存
+                try viewContext.save()
                 }
             }catch{
             //エラーが発生したときに行う例外処理を書いておく場所
@@ -197,9 +167,9 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
         
 //        絞り込み検索（ここを追加！！！！！！）---------------------------------
 //        絞り込みの条件　saveDate = %@ のsaveDateはattribute名
-//        let saveDatePredicate = NSPredicate(format: "saveDate = %@", selectDate as CVarArg)
-//        query.predicate = saveDatePredicate
-//        
+        let saveDatePredicate = NSPredicate(format: "saveDate = %@", selectDate as CVarArg)
+        query.predicate = saveDatePredicate
+        
 //        ----------------------------------------------------------------
         
         
@@ -219,6 +189,7 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
                 print("絞り込んだ結果")
                 print("title:\(title!) memo:\(memo!)kurikaeshi:\(kurikaeshi!)saveDate:\(saveDate!)time:\(time!),image:\(image!)")
                 
+                //セルが押されて遷移してきた時に表示する内容
                 titleLabel.text = title
                 txtView.text = memo
 //                kurikaeshiPicker.delegate = kurikaeshi as! UIPickerViewDelegate
@@ -241,15 +212,14 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
         read()
         datePickerChanged()
         
+        print(selectDate)
         print("TableViewController表示されたよ")
         print("受け取った行番号\(passedIndex)")
         
 //        titleLabel.text = param
 //        txtView.text = param2
-        
         kurikaeshiPicker.delegate = self as! UIPickerViewDelegate
         kurikaeshiPicker.dataSource = self as! UIPickerViewDataSource
-            
         
             }
 
@@ -260,7 +230,7 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if indexPath.section == 0 && indexPath.row == 0 {
+        if indexPath.section == 3 && indexPath.row == 0 {
             toggleDatepicker()
         }
     }
@@ -276,7 +246,7 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
     
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if datePickerHidden && indexPath.section == 1 && indexPath.row == 1 {
+        if datePickerHidden && indexPath.section == 3 && indexPath.row == 1 {
             return 0
         }
         else {

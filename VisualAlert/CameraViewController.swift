@@ -6,7 +6,10 @@ class cameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, UII
     
     @IBOutlet weak var cameraView: UIView!
     @IBOutlet weak var imageFromCameraRoll: UIImageView!
-    @IBOutlet weak var choose: UILabel!
+    
+    @IBOutlet weak var pictureImageView: UIImageView!
+    
+//    @IBOutlet weak var choose: UILabel!
     
     var captureSesssion: AVCaptureSession!
     var stillImageOutput: AVCapturePhotoOutput?
@@ -52,7 +55,7 @@ class cameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, UII
         //.ScaleAspectFit
         //.ScaleAspectFill
         //.ScaleToFill
-        imageFromCameraRoll.contentMode = .scaleAspectFit
+        imageFromCameraRoll.contentMode = .scaleAspectFill
         
         captureSesssion = AVCaptureSession()
         stillImageOutput = AVCapturePhotoOutput()
@@ -118,6 +121,10 @@ class cameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, UII
             
             let image = UIImage(data: photoData!)
             
+//            // 画面上のimagViewに設定
+//            pictureImageView.image = image
+
+            
             // フォトライブラリに保存
             UIImageWriteToSavedPhotosAlbum(image!, nil, nil, nil)
         }
@@ -164,15 +171,15 @@ class cameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, UII
             
         }
         
-        //UserDefaultから取得してきたスイッチの状態によって画像の表示/非表示を切り替える
-        if imageFromCameraRoll == nil{
-            
-            //文字を表示
-            choose.isHidden = false
-        }else{
-            //文字を非表示
-            choose.isHidden = true
-        }
+//        //UserDefaultから取得してきたスイッチの状態によって画像の表示/非表示を切り替える
+//        if imageFromCameraRoll == nil{
+//            
+//            //文字を表示
+//            choose.isHidden = false
+//        }else{
+//            //文字を非表示
+//            choose.isHidden = true
+//        }
         
         //写真選択後にカメラロール表示ViewControllerを引っ込める動作
         picker.dismiss(animated: true, completion: nil)

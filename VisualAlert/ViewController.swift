@@ -2,22 +2,22 @@
 import UIKit
 import CoreData
 import Photos
+import MobileCoreServices
 
 class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource{
 
     @IBOutlet weak var tableView: UITableView!
     
-    var selectDate = String()
-    var selectedIndex = -1
     
+    
+    var selectDate = Date()
+    var selectedIndex = -1
     //TODO(内容)を格納する配列TableView 表示用
     var contentTitle:[NSDictionary] = []
 
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        read()
-    
     }
     
     //すでに存在するデータの読み込み処理
@@ -52,21 +52,18 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
                 
                 var dic = ["memo":memo,"title":title,"saveDate":saveDate,"time":time,"kurikaeshi":kurikaeshi,"image":image] as[String : Any]
                 contentTitle.append(dic as NSDictionary)
-                
             }
-            
         }catch{
-        
         }
         //再読み込み
         tableView.reloadData()
     }
     
-    
+    //画面が表示された時発動
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
         read()
+        //画面の再読み込み
         tableView.reloadData()
     }
     
@@ -88,8 +85,6 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         deleteButton.backgroundColor = UIColor.red
         
         
-        
-        
 //        print("##### データ削除開始 #####")
 //        //iOS9以前の削除方法: フェッチして削除
 //        let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -109,12 +104,8 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
 //        }
 //        print("##### データ削除終了 #####")
         
-        
-        
-        
         return [deleteButton]
     }
-
     
     
     //MARK:TableView用の処理
@@ -132,18 +123,18 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         cell.titleLabel.text = dic["title"] as! String
         cell.memoLabel.text = dic["memo"] as! String
         
-        
-//        if dic["image"] as! String != nil{
-        
-            let url = URL(string: dic["image"] as! String)
-            let fetchResult: PHFetchResult = PHAsset.fetchAssets(withALAssetURLs: [url!], options: nil)
-            let asset: PHAsset = (fetchResult.firstObject! as PHAsset)
-            let manager: PHImageManager = PHImageManager()
-            manager.requestImage(for: asset,targetSize: CGSize(width: 5, height: 500),contentMode: .aspectFill,options: nil) { (image, info) -> Void in
-                cell.cellImage.image = image
-                }
+//        if dic["image"] as! String != nil && dic["memo"] as! String != nil && dic["title"] as! String != nil{
+//
+//            let url = URL(string: dic["image"] as! String)
+//            let fetchResult: PHFetchResult = PHAsset.fetchAssets(withALAssetURLs: [url!], options: nil)
+//            let asset: PHAsset = (fetchResult.firstObject! as PHAsset)
+//            let manager: PHImageManager = PHImageManager()
+//            manager.requestImage(for: asset,targetSize: CGSize(width: 74, height: 71),contentMode: .aspectFill,options: nil) { (image, info) -> Void in
+//                cell.cellImage.image = image
+//                cell.titleLabel.text = dic["title"] as! String
+//                cell.memoLabel.text = dic["memo"] as! String
+//                }
 //            }
-        
         //文字を設定したセルを返す
         return cell
     }
@@ -152,33 +143,24 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("\(indexPath.row + 1)行目がタップされたました。")
         
-        //選択された行番号を保存
-        selectedIndex = indexPath.row
-        
-        //文字列を表示するセルの取得（セルの再利用）
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! customCell
-        
-        //表示したい文字の設定
         var dic = contentTitle[indexPath.row] as! NSDictionary
-        cell.titleLabel.text = dic["title"] as! String
-        cell.memoLabel.text = dic["memo"] as! String
-        
-        
+        //選択された行番号を保存
+        selectDate = dic["saveDate"] as! Date
         //セグエの名前を指定して画面遷移処理を発動
         performSegue(withIdentifier: "showDetail", sender: nil)
-        
     }
-  
     
     //セグエを使って、
     override func prepare(for segue: UIStoryboardSegue,sender: Any?) {
-
         
-        if(segue.identifier == "showDetail") {
-            var vc = segue.destination as! TableViewController
-
-        }
-
+        var dvc:TableViewController = segue.destination as! TableViewController
+        
+        dvc.selectDate = selectDate
+        
+        
+//        if(segue.identifier == "showDetail") {
+//            var vc = segue.destination as! TableViewController
+//        }
     }
 
 
