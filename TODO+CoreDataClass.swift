@@ -2,7 +2,7 @@
 //  TODO+CoreDataClass.swift
 //  VisualAlert
 //
-//  Created by ryousuke on 2017/11/21.
+//  Created by ryousuke on 2017/11/27.
 //  Copyright © 2017年 ryousuke Takahashi. All rights reserved.
 //
 //

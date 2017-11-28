@@ -2,7 +2,7 @@
 //  TODO+CoreDataProperties.swift
 //  VisualAlert
 //
-//  Created by ryousuke on 2017/11/21.
+//  Created by ryousuke on 2017/11/27.
 //  Copyright © 2017年 ryousuke Takahashi. All rights reserved.
 //
 //
@@ -17,11 +17,13 @@ extension TODO {
         return NSFetchRequest<TODO>(entityName: "TODO")
     }
 
-    @NSManaged public var memo: String?
-    @NSManaged public var image: URL?
-    @NSManaged public var kurikaeshi: NSDate?
-    @NSManaged public var sunuzu: String?
     @NSManaged public var color: String?
+    @NSManaged public var image: String?
+    @NSManaged public var kurikaeshi: NSDate?
+    @NSManaged public var memo: String?
+    @NSManaged public var saveDate: NSDate?
+    @NSManaged public var sunuzu: String?
     @NSManaged public var time: NSDate?
+    @NSManaged public var title: String?
 
 }

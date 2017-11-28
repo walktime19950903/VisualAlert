@@ -7,11 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CE41D0781FCBB0F2002EAAC5 /* TODO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE41D0761FCBB0F2002EAAC5 /* TODO+CoreDataClass.swift */; };
+		CE41D0791FCBB0F2002EAAC5 /* TODO+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE41D0771FCBB0F2002EAAC5 /* TODO+CoreDataProperties.swift */; };
 		CE5435CF1FBDC82F0035A4B0 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5435CE1FBDC82F0035A4B0 /* TableViewController.swift */; };
 		CE5436141FBE92240035A4B0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5436131FBE92240035A4B0 /* ViewController.swift */; };
 		CE6C722D1FC04ADF00259FB2 /* cameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6C722C1FC04ADF00259FB2 /* cameraViewController.swift */; };
-		CE6C727B1FC40ACF00259FB2 /* TODO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6C72791FC40ACF00259FB2 /* TODO+CoreDataClass.swift */; };
-		CE6C727C1FC40ACF00259FB2 /* TODO+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6C727A1FC40ACF00259FB2 /* TODO+CoreDataProperties.swift */; };
 		CEBB72801FBA9CAE00B3EDBA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB727F1FBA9CAE00B3EDBA /* AppDelegate.swift */; };
 		CEBB72851FBA9CAE00B3EDBA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEBB72831FBA9CAE00B3EDBA /* Main.storyboard */; };
 		CEBB72881FBA9CAE00B3EDBA /* VisualAlert.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CEBB72861FBA9CAE00B3EDBA /* VisualAlert.xcdatamodeld */; };
@@ -40,11 +40,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CE41D0761FCBB0F2002EAAC5 /* TODO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TODO+CoreDataClass.swift"; sourceTree = "<group>"; };
+		CE41D0771FCBB0F2002EAAC5 /* TODO+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TODO+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		CE5435CE1FBDC82F0035A4B0 /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		CE5436131FBE92240035A4B0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = /Users/user/Documents/VisualAlert/VisualAlert/ViewController.swift; sourceTree = "<absolute>"; };
 		CE6C722C1FC04ADF00259FB2 /* cameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cameraViewController.swift; sourceTree = "<group>"; };
-		CE6C72791FC40ACF00259FB2 /* TODO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TODO+CoreDataClass.swift"; sourceTree = "<group>"; };
-		CE6C727A1FC40ACF00259FB2 /* TODO+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TODO+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		CEBB727C1FBA9CAE00B3EDBA /* VisualAlert.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VisualAlert.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEBB727F1FBA9CAE00B3EDBA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CEBB72841FBA9CAE00B3EDBA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -89,8 +89,8 @@
 		CEBB72731FBA9CAD00B3EDBA = {
 			isa = PBXGroup;
 			children = (
-				CE6C72791FC40ACF00259FB2 /* TODO+CoreDataClass.swift */,
-				CE6C727A1FC40ACF00259FB2 /* TODO+CoreDataProperties.swift */,
+				CE41D0761FCBB0F2002EAAC5 /* TODO+CoreDataClass.swift */,
+				CE41D0771FCBB0F2002EAAC5 /* TODO+CoreDataProperties.swift */,
 				CEBB727E1FBA9CAE00B3EDBA /* VisualAlert */,
 				CEBB72961FBA9CAF00B3EDBA /* VisualAlertTests */,
 				CEBB72A11FBA9CAF00B3EDBA /* VisualAlertUITests */,
@@ -383,13 +383,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEBB72881FBA9CAE00B3EDBA /* VisualAlert.xcdatamodeld in Sources */,
+				CE41D0791FCBB0F2002EAAC5 /* TODO+CoreDataProperties.swift in Sources */,
 				CE5435CF1FBDC82F0035A4B0 /* TableViewController.swift in Sources */,
+				CE41D0781FCBB0F2002EAAC5 /* TODO+CoreDataClass.swift in Sources */,
 				CE6C722D1FC04ADF00259FB2 /* cameraViewController.swift in Sources */,
-				CE6C727C1FC40ACF00259FB2 /* TODO+CoreDataProperties.swift in Sources */,
 				CE5436141FBE92240035A4B0 /* ViewController.swift in Sources */,
 				CEBB72801FBA9CAE00B3EDBA /* AppDelegate.swift in Sources */,
 				CEF1DB001FC51480001D12D8 /* customCell.swift in Sources */,
-				CE6C727B1FC40ACF00259FB2 /* TODO+CoreDataClass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

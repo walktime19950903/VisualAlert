@@ -6,6 +6,7 @@ class cameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, UII
     
     @IBOutlet weak var cameraView: UIView!
     @IBOutlet weak var imageFromCameraRoll: UIImageView!
+    @IBOutlet weak var choose: UILabel!
     
     var captureSesssion: AVCaptureSession!
     var stillImageOutput: AVCapturePhotoOutput?
@@ -14,7 +15,7 @@ class cameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, UII
     
     
     // カメラロールから写真を選択する処理
-    @IBAction func choosePicture() {
+    @IBAction func tapImage(_ sender: UITapGestureRecognizer) {
         // カメラロールが利用可能か？
         if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
             // 写真を選ぶビュー
@@ -161,6 +162,16 @@ class cameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, UII
             imageFromCameraRoll.image = didFinishPickingMediaWithInfo[UIImagePickerControllerOriginalImage] as? UIImage
             
             
+        }
+        
+        //UserDefaultから取得してきたスイッチの状態によって画像の表示/非表示を切り替える
+        if imageFromCameraRoll == nil{
+            
+            //文字を表示
+            choose.isHidden = false
+        }else{
+            //文字を非表示
+            choose.isHidden = true
         }
         
         //写真選択後にカメラロール表示ViewControllerを引っ込める動作

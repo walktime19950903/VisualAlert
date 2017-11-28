@@ -1,6 +1,7 @@
 
 import UIKit
 import CoreData
+import Photos
 
 class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource{
 
@@ -8,9 +9,6 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     
     var selectDate = String()
     var selectedIndex = -1
-    
-    var cellTitle:String? = ""
-    var cellMemo:String? = ""
     
     //TODO(内容)を格納する配列TableView 表示用
     var contentTitle:[NSDictionary] = []
@@ -45,13 +43,14 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
                 let memo :String? = result.value(forKey:"memo") as? String
                 let kurikaeshi :Date? = result.value(forKey:"kurikaeshi") as? Date
                 let title :String? = result.value(forKey: "title") as? String
-                
+                let image :String? = result.value(forKey: "image") as? String
                 let saveDate :Date? = result.value(forKey:"saveDate") as? Date
                 let time :Date? = result.value(forKey:"time") as? Date
                 
-                print("title:\(title!),memo:\(memo!),saveDate:\(saveDate!),time:\(time!),kurikaeshi:\(kurikaeshi!)")
                 
-                var dic = ["memo":memo,"title":title,"saveDate":saveDate,"time":time,"kurikaeshi":kurikaeshi] as[String : Any]
+                print("title:\(title!),memo:\(memo!),saveDate:\(saveDate!),time:\(time!),kurikaeshi:\(kurikaeshi!),image:\(image)")
+                
+                var dic = ["memo":memo,"title":title,"saveDate":saveDate,"time":time,"kurikaeshi":kurikaeshi,"image":image] as[String : Any]
                 contentTitle.append(dic as NSDictionary)
                 
             }
@@ -68,7 +67,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         super.viewWillAppear(animated)
 
         read()
-        
+        tableView.reloadData()
     }
     
     //セルをスライドした時の処理
@@ -87,6 +86,31 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
         deleteButton.backgroundColor = UIColor.red
+        
+        
+        
+        
+//        print("##### データ削除開始 #####")
+//        //iOS9以前の削除方法: フェッチして削除
+//        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+//        let managedObjectContext = appDelegate.managedObjectContext
+//        
+//        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Book")
+//        let predicate = NSPredicate(format: "price=%d", 999) //削除するオブジェクトの検索条件
+//        fetchRequest.predicate = predicate
+//        do {
+//            let books = try managedObjectContext.executeFetchRequest(fetchRequest) as! [Book]
+//            for book in books {
+//                managedObjectContext.deleteObject(book)
+//            }
+//            try managedObjectContext.save()
+//        } catch let error as NSError {
+//            fatalError("Failed to delete books: \(error)")
+//        }
+//        print("##### データ削除終了 #####")
+        
+        
+        
         
         return [deleteButton]
     }
@@ -108,6 +132,18 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         cell.titleLabel.text = dic["title"] as! String
         cell.memoLabel.text = dic["memo"] as! String
         
+        
+//        if dic["image"] as! String != nil{
+        
+            let url = URL(string: dic["image"] as! String)
+            let fetchResult: PHFetchResult = PHAsset.fetchAssets(withALAssetURLs: [url!], options: nil)
+            let asset: PHAsset = (fetchResult.firstObject! as PHAsset)
+            let manager: PHImageManager = PHImageManager()
+            manager.requestImage(for: asset,targetSize: CGSize(width: 5, height: 500),contentMode: .aspectFill,options: nil) { (image, info) -> Void in
+                cell.cellImage.image = image
+                }
+//            }
+        
         //文字を設定したセルを返す
         return cell
     }
@@ -128,13 +164,6 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         cell.memoLabel.text = dic["memo"] as! String
         
         
-        
-        cellTitle = cell.titleLabel.text
-        cellMemo = cell.memoLabel.text
-        
-        print(cellTitle)
-        
-        
         //セグエの名前を指定して画面遷移処理を発動
         performSegue(withIdentifier: "showDetail", sender: nil)
         
@@ -143,15 +172,11 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     
     //セグエを使って、
     override func prepare(for segue: UIStoryboardSegue,sender: Any?) {
-//        //次の画面のインスタンス（オブジェクト）を取得
-//        var dvc:TableViewController = segue.destination as!TableViewController
-//        //次の画面のプロパティ（メンバ変数）passedIndexに選択された行番号を渡す
-//        dvc.passedIndex = selectedIndex
+
         
         if(segue.identifier == "showDetail") {
             var vc = segue.destination as! TableViewController
-            vc.param = cellTitle!
-            vc.param2 = cellMemo!
+
         }
 
     }
