@@ -323,7 +323,7 @@
                                     <color key="titleShadowColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
-                                    <segue destination="CgP-Rm-IoE" kind="show" id="E2y-4u-Lcx"/>
+                                    <segue destination="CgP-Rm-IoE" kind="show" identifier="newSegue" id="E2y-4u-Lcx"/>
                                 </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="singleLineEtched" rowHeight="80" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ySb-d0-VvM">
@@ -524,6 +524,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="E2y-4u-Lcx"/>
+        <segue reference="DPh-cA-RYV"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -15,6 +15,7 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
     var selectDate:Date = Date()
     var contentTitle:[NSDictionary] = []
 
+    var mode:String = ""
     
     //画像のメンバ変数（画像のURLが入っている）
     var letterImage = ""
@@ -70,13 +71,13 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
         // 即反映させる
         myDefault.synchronize()
         
-                if strURL != nil{
-        let url = URL(string: strURL as String!)
-        let fetchResult: PHFetchResult = PHAsset.fetchAssets(withALAssetURLs: [url!], options: nil)
-        let asset: PHAsset = (fetchResult.firstObject! as PHAsset)
-        let manager: PHImageManager = PHImageManager()
-        manager.requestImage(for: asset,targetSize: CGSize(width: 128, height: 122),contentMode: .aspectFill,options: nil) { (image, info) -> Void in
-            self.pictureImageView.image = image
+        if strURL != nil{
+            let url = URL(string: strURL as String!)
+            let fetchResult: PHFetchResult = PHAsset.fetchAssets(withALAssetURLs: [url!], options: nil)
+            let asset: PHAsset = (fetchResult.firstObject! as PHAsset)
+            let manager: PHImageManager = PHImageManager()
+            manager.requestImage(for: asset,targetSize: CGSize(width: 128, height: 122),contentMode: .aspectFill,options: nil) { (image, info) -> Void in
+                self.pictureImageView.image = image
         }
         pictureImageView.image = info[UIImagePickerControllerOriginalImage]! as! UIImage
         //閉じる処理
@@ -97,11 +98,15 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
         //ToDoエンティティオブジェクトを作成
         let ToDo = NSEntityDescription.entity(forEntityName: "TODO", in: viewContext)
         
+
+        if mode == "A" {
+            
         //エンティティにレコード（行）を挿入するためのオブジェクトを作成
         let newRecord = NSManagedObject(entity: ToDo!, insertInto: viewContext)
-    
         
-        
+        //どのエンティティからデータを取得してくるか設定（ToDoエンティティ）
+        let query:NSFetchRequest<TODO> = TODO.fetchRequest()
+            
         //値のセット
         newRecord.setValue(txtView.text, forKey: "memo")  //title列に文字をセット
         newRecord.setValue(Date(), forKey: "saveDate")      //saveDate列に現在日時をセット
@@ -109,40 +114,46 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
         newRecord.setValue(letterImage, forKey:"image")
         newRecord.setValue(Date(), forKey: "kurikaeshi")
         newRecord.setValue(Date(), forKey: "time")
-        
-        
-    
-        //どのエンティティからデータを取得してくるか設定（ToDoエンティティ）
-        let query:NSFetchRequest<TODO> = TODO.fetchRequest()
-        
-        //絞り込み検索（ここを追加！！！！！！）---------------------------------
-        //絞り込みの条件　saveDate = %@ のsaveDateはattribute名
-        let saveDatePredicate = NSPredicate(format: "saveDate = %@", selectDate as CVarArg)
-        query.predicate = saveDatePredicate
-        
-        //----------------------------------------------------------------
-        
-        //レコード（行）の即時保存
-        do{
             
-            //データを一括取得
-            let fetchResults = try viewContext.fetch(query)
+            //レコード（行）の即時保存
+            do{
+                    try viewContext.save()
+                }catch{
+            }
+        //セルが押されて遷移してきた時の処理
+        }else if mode == "E"{
             
-            //きちんと保存できてるか、一行ずつ表示（デバッグエリア）
-            for result: AnyObject in fetchResults {
+            //どのエンティティからデータを取得してくるか設定（ToDoエンティティ）
+            let query:NSFetchRequest<TODO> = TODO.fetchRequest()
+            
+            
+            //絞り込み検索（ここを追加！！！！！！）---------------------------------
+            //絞り込みの条件　saveDate = %@ のsaveDateはattribute名
+            let saveDatePredicate = NSPredicate(format: "saveDate = %@", selectDate as CVarArg)
+            query.predicate = saveDatePredicate
+            
+            //----------------------------------------------------------------
+            //レコード（行）の即時保存
+            do{
+                //データを一括取得
+                let fetchResults = try viewContext.fetch(query)
                 
-                //更新する対象のデータをNSManagedObjectにダウンキャスト変換そうすることにより編集が可能になる
-                let record = result as! NSManagedObject
-                
-                //更新したいデータのセット
-                record.setValue(titleLabel.text, forKey: "title")
-                record.setValue(txtView.text, forKey: "memo")
-        
-                //更新を即時保存
-                try viewContext.save()
+                //きちんと保存できてるか、一行ずつ表示（デバッグエリア）
+                for result: AnyObject in fetchResults {
+                    
+                    //更新する対象のデータをNSManagedObjectにダウンキャスト変換そうすることにより編集が可能になる
+                    let record = result as! NSManagedObject
+                    
+                    //更新したいデータのセット
+                    record.setValue(titleLabel.text, forKey: "title")
+                    record.setValue(txtView.text, forKey: "memo")
+                    
+                    //更新を即時保存
+                    try viewContext.save()
                 }
             }catch{
-            //エラーが発生したときに行う例外処理を書いておく場所
+                //エラーが発生したときに行う例外処理を書いておく場所
+            }
         }
         //最初の画面に戻る
         self.navigationController?.popToRootViewController(animated: true)
@@ -209,8 +220,13 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if mode == "E"{
         read()
+        }
         datePickerChanged()
+        
+        print(mode)
         
         print(selectDate)
         print("TableViewController表示されたよ")

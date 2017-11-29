@@ -48,7 +48,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
                 let time :Date? = result.value(forKey:"time") as? Date
                 
                 
-                print("title:\(title!),memo:\(memo!),saveDate:\(saveDate!),time:\(time!),kurikaeshi:\(kurikaeshi!),image:\(image)")
+//                print("title:\(title!),memo:\(memo!),saveDate:\(saveDate!),time:\(time!),kurikaeshi:\(kurikaeshi!),image:\(image)")
                 
                 var dic = ["memo":memo,"title":title,"saveDate":saveDate,"time":time,"kurikaeshi":kurikaeshi,"image":image] as[String : Any]
                 contentTitle.append(dic as NSDictionary)
@@ -119,10 +119,10 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! customCell
         
         //表示したい文字の設定
-        var dic = contentTitle[indexPath.row] as! NSDictionary
-        cell.titleLabel.text = dic["title"] as! String
-        cell.memoLabel.text = dic["memo"] as! String
-        
+        let dic = contentTitle[indexPath.row] as! NSDictionary
+        cell.titleLabel.text = dic["title"] as? String
+        cell.memoLabel.text = dic["memo"] as? String
+//
 //        if dic["image"] as! String != nil && dic["memo"] as! String != nil && dic["title"] as! String != nil{
 //
 //            let url = URL(string: dic["image"] as! String)
@@ -153,10 +153,17 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     //セグエを使って、
     override func prepare(for segue: UIStoryboardSegue,sender: Any?) {
         
-        var dvc:TableViewController = segue.destination as! TableViewController
+        let dvc:TableViewController = segue.destination as! TableViewController
         
         dvc.selectDate = selectDate
         
+        if (segue.identifier == "showDetail"){
+        
+            dvc.mode = "E"
+        }else if (segue.identifier == "newSegue"){
+            
+            dvc.mode = "A"
+        }
         
 //        if(segue.identifier == "showDetail") {
 //            var vc = segue.destination as! TableViewController
