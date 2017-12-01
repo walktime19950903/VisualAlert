@@ -30,7 +30,7 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
     
     
     @IBAction func tapImage(_ sender: UITapGestureRecognizer) {
-        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.photoLibrary) {    //追記
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.photoLibrary) {    
             //写真ライブラリ(カメラロール)表示用のViewControllerを宣言
             let controller = UIImagePickerController()
             
