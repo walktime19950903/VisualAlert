@@ -5,13 +5,7 @@ import MobileCoreServices
 
 class TableViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource  {
     
-    
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return texts.count
-    }
-    
-    
+ 
     var selectDate:Date = Date()
     var contentTitle:[NSDictionary] = []
 
@@ -58,18 +52,18 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
         
         let strURL:String = assetURL.description
         
-        //メンバ変数に写真のURLを保存
-        letterImage = strURL
-        print("写真のURL:\(letterImage)")
-        
-        // ユーザーデフォルトを用意する
-        let myDefault = UserDefaults.standard
-        
-        // データを書き込んで
-        myDefault.set(strURL, forKey: "selectedPhotoURL")
-        
-        // 即反映させる
-        myDefault.synchronize()
+//        //メンバ変数に写真のURLを保存
+//        letterImage = strURL
+//        print("写真のURL:\(letterImage)")
+//
+//        // ユーザーデフォルトを用意する
+//        let myDefault = UserDefaults.standard
+//
+//        // データを書き込んで
+//        myDefault.set(strURL, forKey: "selectedPhotoURL")
+//
+//        // 即反映させる
+//        myDefault.synchronize()
         
         if strURL != nil{
             let url = URL(string: strURL as String!)
@@ -79,7 +73,7 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
             manager.requestImage(for: asset,targetSize: CGSize(width: 128, height: 122),contentMode: .aspectFill,options: nil) { (image, info) -> Void in
                 self.pictureImageView.image = image
         }
-        pictureImageView.image = info[UIImagePickerControllerOriginalImage]! as! UIImage
+//        pictureImageView.image = info[UIImagePickerControllerOriginalImage]! as! UIImage
         //閉じる処理
         picker.dismiss(animated: true, completion: nil)
         }
@@ -180,7 +174,6 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
 //        絞り込みの条件　saveDate = %@ のsaveDateはattribute名
         let saveDatePredicate = NSPredicate(format: "saveDate = %@", selectDate as CVarArg)
         query.predicate = saveDatePredicate
-        
 //        ----------------------------------------------------------------
         
         
@@ -207,13 +200,16 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
                 
                 var dic = ["title":title,"memo":memo,"kurikaeshi":kurikaeshi,"saveDate":saveDate,"time":time,"image":image] as[String : Any]
                 contentTitle.append(dic as NSDictionary)
-                
             }
-            
         }catch{
-            
         }
     }
+    
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return texts.count
+    }
+
 
     //受け取った行番号を保存しておく変数
     var passedIndex:Int = -1
@@ -236,8 +232,7 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
 //        txtView.text = param2
         kurikaeshiPicker.delegate = self as! UIPickerViewDelegate
         kurikaeshiPicker.dataSource = self as! UIPickerViewDataSource
-        
-            }
+        }
 
     
     

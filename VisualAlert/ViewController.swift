@@ -122,7 +122,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         let dic = contentTitle[indexPath.row] as! NSDictionary
         cell.titleLabel.text = dic["title"] as? String
         cell.memoLabel.text = dic["memo"] as? String
-//
+
 //        if dic["image"] as! String != nil && dic["memo"] as! String != nil && dic["title"] as! String != nil{
 //
 //            let url = URL(string: dic["image"] as! String)
