@@ -134,11 +134,29 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
             manager.requestImage(for: asset,targetSize: CGSize(width: 74, height: 71),contentMode: .aspectFill,options: nil) { (image, info) -> Void in
                 cell.cellImage.image = image
                 cell.titleLabel.text = dic["title"] as! String
-                cell.memoLabel.text = dic["memo"] as! String
+                
+                //日付を文字列に変換
+                let df = DateFormatter()
+                df.dateFormat = "yyyy/MM/dd/HH:mm"
+                
+                //時差補正（日本時間に変更）
+                df.locale = NSLocale(localeIdentifier: "ja_JP") as! Locale!
+                
+                cell.memoLabel.text = df.string(from: dic["saveDate"] as! Date)
                 }
         }else{
             cell.titleLabel.text = dic["title"] as! String
-            cell.memoLabel.text = dic["memo"] as! String
+//            cell.memoLabel.text = dic["saveDate"] as! String
+            
+            //日付を文字列に変換
+            let df = DateFormatter()
+            df.dateFormat = "yyyy/MM/dd/HH:mm"
+            
+            //時差補正（日本時間に変更）
+            df.locale = NSLocale(localeIdentifier: "ja_JP") as! Locale!
+            
+            cell.memoLabel.text = df.string(from: dic["saveDate"] as! Date)
+            
         }
         //文字を設定したセルを返す
         return cell

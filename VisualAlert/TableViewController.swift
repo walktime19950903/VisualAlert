@@ -200,7 +200,7 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
                 txtView.text = memo
                 letterImage = image!
                 
-                if letterImage != nil{
+                if letterImage != ""{
                     let url = URL(string: letterImage as String!)
                     let fetchResult: PHFetchResult = PHAsset.fetchAssets(withALAssetURLs: [url!], options: nil)
                     let asset: PHAsset = (fetchResult.firstObject! as PHAsset)
@@ -208,9 +208,7 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
                     manager.requestImage(for: asset,targetSize: CGSize(width: 128, height: 122),contentMode: .aspectFill,options: nil) { (image, info) -> Void in
                         self.pictureImageView.image = image
                     }
-                
-                }
-                
+                }else{}
 //                kurikaeshiPicker.delegate = kurikaeshi as! UIPickerViewDelegate
                 
                 var dic = ["title":title,"memo":memo,"kurikaeshi":kurikaeshi,"saveDate":saveDate,"time":time,"image":image] as[String : Any]
