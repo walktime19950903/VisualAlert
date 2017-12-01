@@ -48,7 +48,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
                 let time :Date? = result.value(forKey:"time") as? Date
                 
                 
-//                print("title:\(title!),memo:\(memo!),saveDate:\(saveDate!),time:\(time!),kurikaeshi:\(kurikaeshi!),image:\(image)")
+                print("title:\(title!),memo:\(memo!),saveDate:\(saveDate!),time:\(time!),kurikaeshi:\(kurikaeshi!),image:\(image)")
                 
                 var dic = ["memo":memo,"title":title,"saveDate":saveDate,"time":time,"kurikaeshi":kurikaeshi,"image":image] as[String : Any]
                 contentTitle.append(dic as NSDictionary)
@@ -80,7 +80,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         
         let deleteButton: UITableViewRowAction = UITableViewRowAction(style: .normal, title: "削除") { (action, index) -> Void in
             self.contentTitle.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
+            tableView.deleteRows(at: [indexPath], with:  UITableViewRowAnimation.automatic)
         }
         deleteButton.backgroundColor = UIColor.red
         
@@ -120,21 +120,26 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         
         //表示したい文字の設定
         let dic = contentTitle[indexPath.row] as! NSDictionary
-        cell.titleLabel.text = dic["title"] as? String
-        cell.memoLabel.text = dic["memo"] as? String
+//        cell.titleLabel.text = dic["title"] as? String
+//        cell.memoLabel.text = dic["memo"] as? String
 
-//        if dic["image"] as! String != nil && dic["memo"] as! String != nil && dic["title"] as! String != nil{
-//
-//            let url = URL(string: dic["image"] as! String)
-//            let fetchResult: PHFetchResult = PHAsset.fetchAssets(withALAssetURLs: [url!], options: nil)
-//            let asset: PHAsset = (fetchResult.firstObject! as PHAsset)
-//            let manager: PHImageManager = PHImageManager()
-//            manager.requestImage(for: asset,targetSize: CGSize(width: 74, height: 71),contentMode: .aspectFill,options: nil) { (image, info) -> Void in
-//                cell.cellImage.image = image
-//                cell.titleLabel.text = dic["title"] as! String
-//                cell.memoLabel.text = dic["memo"] as! String
-//                }
-//            }
+        /*&& dic["memo"] as! String != nil && dic["title"] as! String != nil*/
+        
+        if dic["image"] as! String != ""{
+
+            let url = URL(string: dic["image"] as! String)
+            let fetchResult: PHFetchResult = PHAsset.fetchAssets(withALAssetURLs: [url!], options: nil)
+            let asset: PHAsset = (fetchResult.firstObject! as PHAsset)
+            let manager: PHImageManager = PHImageManager()
+            manager.requestImage(for: asset,targetSize: CGSize(width: 74, height: 71),contentMode: .aspectFill,options: nil) { (image, info) -> Void in
+                cell.cellImage.image = image
+                cell.titleLabel.text = dic["title"] as! String
+                cell.memoLabel.text = dic["memo"] as! String
+                }
+        }else{
+            cell.titleLabel.text = dic["title"] as! String
+            cell.memoLabel.text = dic["memo"] as! String
+        }
         //文字を設定したセルを返す
         return cell
     }

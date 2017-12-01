@@ -2,6 +2,7 @@ import UIKit
 import CoreData
 import Photos
 import MobileCoreServices
+import AssetsLibrary
 
 class TableViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource  {
     
@@ -52,18 +53,18 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
         
         let strURL:String = assetURL.description
         
-//        //メンバ変数に写真のURLを保存
-//        letterImage = strURL
-//        print("写真のURL:\(letterImage)")
-//
-//        // ユーザーデフォルトを用意する
-//        let myDefault = UserDefaults.standard
-//
-//        // データを書き込んで
-//        myDefault.set(strURL, forKey: "selectedPhotoURL")
-//
-//        // 即反映させる
-//        myDefault.synchronize()
+        //メンバ変数に写真のURLを保存
+        letterImage = strURL
+        print("写真のURL:\(letterImage)")
+
+        // ユーザーデフォルトを用意する
+        let myDefault = UserDefaults.standard
+
+        // データを書き込んで
+        myDefault.set(strURL, forKey: "selectedPhotoURL")
+
+        // 即反映させる
+        myDefault.synchronize()
         
         if strURL != nil{
             let url = URL(string: strURL as String!)
@@ -73,7 +74,7 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
             manager.requestImage(for: asset,targetSize: CGSize(width: 128, height: 122),contentMode: .aspectFill,options: nil) { (image, info) -> Void in
                 self.pictureImageView.image = image
         }
-//        pictureImageView.image = info[UIImagePickerControllerOriginalImage]! as! UIImage
+        pictureImageView.image = info[UIImagePickerControllerOriginalImage]! as! UIImage
         //閉じる処理
         picker.dismiss(animated: true, completion: nil)
         }
@@ -141,6 +142,7 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
                     //更新したいデータのセット
                     record.setValue(titleLabel.text, forKey: "title")
                     record.setValue(txtView.text, forKey: "memo")
+                    record.setValue(letterImage, forKey: "image")
                     
                     //更新を即時保存
                     try viewContext.save()
@@ -196,6 +198,19 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
                 //セルが押されて遷移してきた時に表示する内容
                 titleLabel.text = title
                 txtView.text = memo
+                letterImage = image!
+                
+                if letterImage != nil{
+                    let url = URL(string: letterImage as String!)
+                    let fetchResult: PHFetchResult = PHAsset.fetchAssets(withALAssetURLs: [url!], options: nil)
+                    let asset: PHAsset = (fetchResult.firstObject! as PHAsset)
+                    let manager: PHImageManager = PHImageManager()
+                    manager.requestImage(for: asset,targetSize: CGSize(width: 128, height: 122),contentMode: .aspectFill,options: nil) { (image, info) -> Void in
+                        self.pictureImageView.image = image
+                    }
+                
+                }
+                
 //                kurikaeshiPicker.delegate = kurikaeshi as! UIPickerViewDelegate
                 
                 var dic = ["title":title,"memo":memo,"kurikaeshi":kurikaeshi,"saveDate":saveDate,"time":time,"image":image] as[String : Any]
