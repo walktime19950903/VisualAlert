@@ -176,16 +176,13 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     //セグエを使って、
     override func prepare(for segue: UIStoryboardSegue,sender: Any?) {
         
-        let dvc:TableViewController = segue.destination as! TableViewController
-        
-        dvc.selectDate = selectDate
-        
         if (segue.identifier == "showDetail"){
-        
+            let dvc:TableViewController = segue.destination as! TableViewController
+            dvc.selectDate = selectDate
             dvc.mode = "E"
         }else if (segue.identifier == "newSegue"){
-            
-            dvc.mode = "A"
+            let dvc1:PictureViewController = segue.destination as! PictureViewController
+            dvc1.selectDate = selectDate
         }
         
 //        if(segue.identifier == "showDetail") {

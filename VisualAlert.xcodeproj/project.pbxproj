@@ -20,6 +20,8 @@
 		CEBB728D1FBA9CAE00B3EDBA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEBB728B1FBA9CAE00B3EDBA /* LaunchScreen.storyboard */; };
 		CEBB72981FBA9CAF00B3EDBA /* VisualAlertTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB72971FBA9CAF00B3EDBA /* VisualAlertTests.swift */; };
 		CEBB72A31FBA9CAF00B3EDBA /* VisualAlertUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB72A21FBA9CAF00B3EDBA /* VisualAlertUITests.swift */; };
+		CED6B09F1FD18D84005E811D /* album.png in Resources */ = {isa = PBXBuildFile; fileRef = CED6B09D1FD18D84005E811D /* album.png */; };
+		CED6B0A11FD18E41005E811D /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = CED6B0A01FD18E41005E811D /* camera.png */; };
 		CEF1DB001FC51480001D12D8 /* customCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF1DAFF1FC51480001D12D8 /* customCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -60,6 +62,8 @@
 		CEBB729E1FBA9CAF00B3EDBA /* VisualAlertUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VisualAlertUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEBB72A21FBA9CAF00B3EDBA /* VisualAlertUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualAlertUITests.swift; sourceTree = "<group>"; };
 		CEBB72A41FBA9CAF00B3EDBA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CED6B09D1FD18D84005E811D /* album.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = album.png; sourceTree = SOURCE_ROOT; };
+		CED6B0A01FD18E41005E811D /* camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera.png; sourceTree = SOURCE_ROOT; };
 		CEF1DAFF1FC51480001D12D8 /* customCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = customCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -113,6 +117,8 @@
 		CEBB727E1FBA9CAE00B3EDBA /* VisualAlert */ = {
 			isa = PBXGroup;
 			children = (
+				CED6B09D1FD18D84005E811D /* album.png */,
+				CED6B0A01FD18E41005E811D /* camera.png */,
 				CE5436131FBE92240035A4B0 /* ViewController.swift */,
 				CEBB727F1FBA9CAE00B3EDBA /* AppDelegate.swift */,
 				CE5108551FCD05F6001C4467 /* PictureViewController.swift */,
@@ -262,6 +268,8 @@
 				CEBB728D1FBA9CAE00B3EDBA /* LaunchScreen.storyboard in Resources */,
 				CEBB728A1FBA9CAE00B3EDBA /* Assets.xcassets in Resources */,
 				CEBB72851FBA9CAE00B3EDBA /* Main.storyboard in Resources */,
+				CED6B09F1FD18D84005E811D /* album.png in Resources */,
+				CED6B0A11FD18E41005E811D /* camera.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

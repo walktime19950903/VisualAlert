@@ -9,7 +9,8 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
  
     var selectDate:Date = Date()
     var contentTitle:[NSDictionary] = []
-
+    var secondImage = UIImage()
+    
     var mode:String = ""
     
     //画像のメンバ変数（画像のURLが入っている）
@@ -227,12 +228,16 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
     //受け取った行番号を保存しておく変数
     var passedIndex:Int = -1
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         if mode == "E"{
         read()
+        }else if mode == "A"{
+            self.pictureImageView.image = secondImage
+            print("secondImageの中身\(secondImage)")
         }
+        
         datePickerChanged()
         
         print(mode)
