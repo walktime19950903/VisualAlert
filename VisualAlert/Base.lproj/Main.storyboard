@@ -254,7 +254,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="129.59999999999999" y="-192.50374812593705"/>
+            <point key="canvasLocation" x="-1205" y="508"/>
         </scene>
         <!--Picture View Controller-->
         <scene sceneID="eAw-Mx-c4r">
@@ -319,7 +319,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lKk-yM-AaT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-711.20000000000005" y="187.55622188905548"/>
+            <point key="canvasLocation" x="-754" y="-341"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="xmg-1c-r2A">
@@ -440,89 +440,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pmU-hE-Oav" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1639.2" y="-341.37931034482762"/>
-        </scene>
-        <!--Camera View Controller-->
-        <scene sceneID="J9A-zO-7GH">
-            <objects>
-                <viewController id="Q0m-Ii-psj" customClass="cameraViewController" customModule="VisualAlert" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="wUU-wW-Dto">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1qj-RO-ykR">
-                                <rect key="frame" x="0.0" y="20" width="375" height="550"/>
-                                <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="V6w-r4-aNV">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="550"/>
-                                    </imageView>
-                                </subviews>
-                                <color key="backgroundColor" red="0.7019608021" green="0.7019608021" blue="0.7019608021" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="V6w-r4-aNV" secondAttribute="bottom" id="K9q-lq-Dwe"/>
-                                    <constraint firstItem="V6w-r4-aNV" firstAttribute="leading" secondItem="1qj-RO-ykR" secondAttribute="leading" id="P0B-mO-gV9"/>
-                                    <constraint firstAttribute="trailing" secondItem="V6w-r4-aNV" secondAttribute="trailing" id="Qie-qb-tX3"/>
-                                    <constraint firstItem="V6w-r4-aNV" firstAttribute="top" secondItem="1qj-RO-ykR" secondAttribute="top" id="nvE-pt-qsc"/>
-                                </constraints>
-                            </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Tc-ht-yMb">
-                                <rect key="frame" x="150" y="597" width="74" height="50"/>
-                                <color key="backgroundColor" red="0.7019608021" green="0.7019608021" blue="0.7019608021" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="nAt-S5-aQs"/>
-                                    <constraint firstAttribute="width" constant="74" id="yUV-83-6P1"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                <state key="normal" title="撮影"/>
-                                <connections>
-                                    <action selector="cameraButtonTapped:" destination="Q0m-Ii-psj" eventType="touchUpInside" id="yGS-Wz-EbY"/>
-                                </connections>
-                            </button>
-                            <imageView contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="vcc-yT-4hM">
-                                <rect key="frame" x="16" y="578" width="76" height="77"/>
-                                <color key="backgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
-                                <connections>
-                                    <outletCollection property="gestureRecognizers" destination="EdL-0l-Qhl" appends="YES" id="Zjs-K3-Afh"/>
-                                </connections>
-                            </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3tM-Z6-SRl">
-                                <rect key="frame" x="255" y="597" width="104" height="50"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                                <state key="normal" title="次へ"/>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="1Tc-ht-yMb" firstAttribute="top" secondItem="3tM-Z6-SRl" secondAttribute="top" id="3Pp-TY-iGo"/>
-                            <constraint firstItem="YVf-fF-ak3" firstAttribute="bottom" secondItem="vcc-yT-4hM" secondAttribute="bottom" constant="12" id="5Uo-Vs-25h"/>
-                            <constraint firstItem="1qj-RO-ykR" firstAttribute="top" secondItem="YVf-fF-ak3" secondAttribute="top" id="7P9-qX-AQX"/>
-                            <constraint firstItem="3tM-Z6-SRl" firstAttribute="trailing" secondItem="wUU-wW-Dto" secondAttribute="trailingMargin" id="7Qb-GD-HCm"/>
-                            <constraint firstItem="vcc-yT-4hM" firstAttribute="top" secondItem="1qj-RO-ykR" secondAttribute="bottom" constant="8" symbolic="YES" id="9GW-03-ucb"/>
-                            <constraint firstItem="1qj-RO-ykR" firstAttribute="centerX" secondItem="1Tc-ht-yMb" secondAttribute="centerX" id="9nZ-oh-xqO"/>
-                            <constraint firstItem="3tM-Z6-SRl" firstAttribute="leading" secondItem="1Tc-ht-yMb" secondAttribute="trailing" constant="31" id="HTY-6v-aLQ"/>
-                            <constraint firstItem="1Tc-ht-yMb" firstAttribute="bottom" secondItem="3tM-Z6-SRl" secondAttribute="bottom" id="IJI-an-xGP"/>
-                            <constraint firstItem="1Tc-ht-yMb" firstAttribute="top" secondItem="1qj-RO-ykR" secondAttribute="bottom" constant="27" id="IbO-Fn-9lh"/>
-                            <constraint firstAttribute="trailing" secondItem="1qj-RO-ykR" secondAttribute="trailing" id="Ooc-Po-wm1"/>
-                            <constraint firstAttribute="bottom" secondItem="1Tc-ht-yMb" secondAttribute="bottom" constant="20" symbolic="YES" id="fWo-ye-SMm"/>
-                            <constraint firstItem="vcc-yT-4hM" firstAttribute="leading" secondItem="wUU-wW-Dto" secondAttribute="leadingMargin" id="qYq-nh-ieP"/>
-                            <constraint firstItem="1Tc-ht-yMb" firstAttribute="leading" secondItem="vcc-yT-4hM" secondAttribute="trailing" constant="58" id="t2T-uv-HMs"/>
-                            <constraint firstItem="1qj-RO-ykR" firstAttribute="leading" secondItem="wUU-wW-Dto" secondAttribute="leading" id="xc0-w2-p9y"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="YVf-fF-ak3"/>
-                    </view>
-                    <connections>
-                        <outlet property="cameraView" destination="1qj-RO-ykR" id="Xaa-kA-OTg"/>
-                        <outlet property="imageFromCameraRoll" destination="vcc-yT-4hM" id="Pis-B2-NyE"/>
-                        <outlet property="pictureImageView" destination="V6w-r4-aNV" id="eWO-4j-2rc"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Ftk-7W-0YM" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="EdL-0l-Qhl">
-                    <connections>
-                        <action selector="tapImage:" destination="Q0m-Ii-psj" id="Xm1-3s-Egu"/>
-                    </connections>
-                </tapGestureRecognizer>
-            </objects>
-            <point key="canvasLocation" x="-711.20000000000005" y="-860.41979010494754"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="rbr-Rk-icC">

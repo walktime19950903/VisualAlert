@@ -4,7 +4,8 @@ import Photos
 import MobileCoreServices
 import AssetsLibrary
 
-class TableViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource  {
+
+class TableViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
     
  
     var selectDate:Date = Date()
@@ -24,6 +25,9 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
     @IBOutlet weak var kurikaeshiPicker: UIPickerView!
     @IBOutlet weak var kurikaeshiDetail: UILabel!
 
+    
+
+    
 
     
     let texts = ["通知なし","1回","10分","30分","1時間","毎日","毎週","毎月"]
@@ -231,6 +235,7 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         if mode == "E"{
         read()
         }else if mode == "A"{
@@ -312,6 +317,8 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         kurikaeshiDetail.text = texts[row]
     }
+
+
     
 
 }

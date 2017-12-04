@@ -30,12 +30,12 @@ class PictureViewController: UIViewController,UIImagePickerControllerDelegate,UI
         print("アルバムタップされたよ")
         
         // カメラロールが利用可能か？
-        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.photoLibrary) {
             // 写真を選ぶビュー
             let pickerView = UIImagePickerController()
             // 写真の選択元をカメラロールにする
             // 「.camera」にすればカメラを起動できる
-            pickerView.sourceType = .photoLibrary
+            pickerView.sourceType = UIImagePickerControllerSourceType.photoLibrary
             // デリゲート
             pickerView.delegate = self
             // ビューに表示
