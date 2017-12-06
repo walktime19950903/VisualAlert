@@ -90,7 +90,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
 //        let appDelegate = UIApplication.shared.delegate as! AppDelegate
 //        let managedObjectContext = appDelegate.managedObjectContext
 //        
-//        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Book")
+//        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "TODO")
 //        let predicate = NSPredicate(format: "price=%d", 999) //削除するオブジェクトの検索条件
 //        fetchRequest.predicate = predicate
 //        do {
@@ -181,8 +181,10 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
             dvc.selectDate = selectDate
             dvc.mode = "E"
         }else if (segue.identifier == "newSegue"){
+            
             let dvc1:PictureViewController = segue.destination as! PictureViewController
             dvc1.selectDate = selectDate
+            dvc1.mode = "A"
         }
         
 //        if(segue.identifier == "showDetail") {

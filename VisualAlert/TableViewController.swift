@@ -2,7 +2,7 @@ import UIKit
 import CoreData
 import Photos
 import MobileCoreServices
-import AssetsLibrary
+//import AssetsLibrary
 
 
 class TableViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
@@ -10,9 +10,10 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
  
     var selectDate:Date = Date()
     var contentTitle:[NSDictionary] = []
-    var secondImage = UIImage()
+    var secondImage = ""
     
     var mode:String = ""
+    var mode2:String = ""
     
     //画像のメンバ変数（画像のURLが入っている）
     var letterImage = ""
@@ -24,65 +25,107 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
     @IBOutlet weak var datePicker: UIDatePicker!
     @IBOutlet weak var kurikaeshiPicker: UIPickerView!
     @IBOutlet weak var kurikaeshiDetail: UILabel!
-
     
-
-    
-
+    @IBOutlet weak var gazouLabel: UILabel!
+    @IBOutlet weak var doneButton: UIBarButtonItem!//完了ボタン
+    @IBOutlet weak var placeHolder: UILabel!//プレースホルダー
     
     let texts = ["通知なし","1回","10分","30分","1時間","毎日","毎週","毎月"]
    
+    //textviewがフォーカスされたら、Labelを非表示
+    func textViewShouldBeginEditing(textView: UITextView) -> Bool
+    {
+
+//        //完了ボタンの押せるか押せないか
+//        if titleLabel == nil{
+//            doneButton.isEnabled = true
+//        }
+
+        placeHolder.isHidden = true
+        return true
+    }
+
+    //textviewからフォーカスが外れて、TextViewが空だったらLabelを再び表示
+    func textViewDidEndEditing(textView: UITextView) -> Bool {
+
+        if(txtView.text.isEmpty){
+            placeHolder.isHidden = false
+        }
+        // キーボードを隠す
+        txtView.resignFirstResponder()
+        return true
+    }
+
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if secondImage == ""{
+            gazouLabel.isHidden = false
+        }else{
+            gazouLabel.isHidden = true
+        }
+    }
     
     
     @IBAction func tapImage(_ sender: UITapGestureRecognizer) {
-        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.photoLibrary) {    
-            //写真ライブラリ(カメラロール)表示用のViewControllerを宣言
-            let controller = UIImagePickerController()
-            
-            controller.delegate = self
-            //新しく宣言したViewControllerでカメラとカメラロールのどちらを表示するかを指定
-            controller.sourceType = UIImagePickerControllerSourceType.photoLibrary
-            //トリミング
-            controller.allowsEditing = true
-            //新たに追加したカメラロール表示ViewControllerをpresentViewControllerにする
-            self.present(controller, animated: true, completion: nil)
-        }
+        
+        print("イメージタップされたよ")
+        
+//        // ユーザーに許可を促す.
+//        PHPhotoLibrary.requestAuthorization { (status) -> Void in
+//
+//        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.photoLibrary) {
+//            //写真ライブラリ(カメラロール)表示用のViewControllerを宣言
+//            let controller = UIImagePickerController()
+//
+//            controller.delegate = self
+//            //新しく宣言したViewControllerでカメラとカメラロールのどちらを表示するかを指定
+//            controller.sourceType = UIImagePickerControllerSourceType.photoLibrary
+//            //トリミング
+//            controller.allowsEditing = true
+//            //新たに追加したカメラロール表示ViewControllerをpresentViewControllerにする
+//            self.present(controller, animated: true, completion: nil)
+//            }
+//        }
     }
 
     
     // 写真を選んだ後に呼ばれる処理
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         
-        //写真を文字列に変換
-        let assetURL:AnyObject = info[UIImagePickerControllerReferenceURL]! as AnyObject
-        
-        let strURL:String = assetURL.description
-        
-        //メンバ変数に写真のURLを保存
-        letterImage = strURL
-        print("写真のURL:\(letterImage)")
+//        //写真を文字列に変換
+//        let assetURL:AnyObject = info[UIImagePickerControllerReferenceURL]! as AnyObject
+//
+//        let strURL:String = assetURL.description
+//
+//
+//        print("写真のURL:\(letterImage)")
+//
+////        // ユーザーデフォルトを用意する
+////        let myDefault = UserDefaults.standard
+////
+////        // データを書き込んで
+////        myDefault.set(strURL, forKey: "selectedPhotoURL")
+////
+////        // 即反映させる
+////        myDefault.synchronize()
+//
+//
+//        if strURL != nil{
+//            let url = URL(string: strURL as String!)
+//            let fetchResult: PHFetchResult = PHAsset.fetchAssets(withALAssetURLs: [url!], options: nil)
+//            let asset: PHAsset = (fetchResult.firstObject! as PHAsset)
+//            let manager: PHImageManager = PHImageManager()
+//            manager.requestImage(for: asset,targetSize: CGSize(width: 128, height: 122),contentMode: .aspectFill,options: nil) { (image, info) -> Void in
+//                self.pictureImageView.image = image
+//        }
+//            self.pictureImageView.image = info[UIImagePickerControllerOriginalImage]! as! UIImage
+//        //閉じる処理
+//        picker.dismiss(animated: true, completion: nil)
+//
+//            //メンバ変数に写真のURLを保存
+//            self.letterImage = strURL
+//            }
 
-        // ユーザーデフォルトを用意する
-        let myDefault = UserDefaults.standard
-
-        // データを書き込んで
-        myDefault.set(strURL, forKey: "selectedPhotoURL")
-
-        // 即反映させる
-        myDefault.synchronize()
-        
-        if strURL != nil{
-            let url = URL(string: strURL as String!)
-            let fetchResult: PHFetchResult = PHAsset.fetchAssets(withALAssetURLs: [url!], options: nil)
-            let asset: PHAsset = (fetchResult.firstObject! as PHAsset)
-            let manager: PHImageManager = PHImageManager()
-            manager.requestImage(for: asset,targetSize: CGSize(width: 128, height: 122),contentMode: .aspectFill,options: nil) { (image, info) -> Void in
-                self.pictureImageView.image = image
-        }
-        pictureImageView.image = info[UIImagePickerControllerOriginalImage]! as! UIImage
-        //閉じる処理
-        picker.dismiss(animated: true, completion: nil)
-        }
     }
     
     
@@ -111,7 +154,7 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
         newRecord.setValue(txtView.text, forKey: "memo")  //title列に文字をセット
         newRecord.setValue(Date(), forKey: "saveDate")      //saveDate列に現在日時をセット
         newRecord.setValue(titleLabel.text, forKey: "title")
-        newRecord.setValue(letterImage, forKey:"image")
+        newRecord.setValue(secondImage, forKey:"image")
         newRecord.setValue(Date(), forKey: "kurikaeshi")
         newRecord.setValue(Date(), forKey: "time")
             
@@ -147,7 +190,7 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
                     //更新したいデータのセット
                     record.setValue(titleLabel.text, forKey: "title")
                     record.setValue(txtView.text, forKey: "memo")
-                    record.setValue(letterImage, forKey: "image")
+                    record.setValue(secondImage, forKey: "image")
                     
                     //更新を即時保存
                     try viewContext.save()
@@ -203,10 +246,13 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
                 //セルが押されて遷移してきた時に表示する内容
                 titleLabel.text = title
                 txtView.text = memo
-                letterImage = image!
                 
-                if letterImage != ""{
-                    let url = URL(string: letterImage as String!)
+                if mode == "E"{
+                secondImage = image!
+                }
+                
+                if secondImage != ""{
+                    let url = URL(string: secondImage as String!)
                     let fetchResult: PHFetchResult = PHAsset.fetchAssets(withALAssetURLs: [url!], options: nil)
                     let asset: PHAsset = (fetchResult.firstObject! as PHAsset)
                     let manager: PHImageManager = PHImageManager()
@@ -236,23 +282,33 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if mode == "E"{
+
+        
+    if mode == "E" || mode2 == "ShowBack"{
         read()
+            print("secondの中身:\(secondImage)")
         }else if mode == "A"{
-            self.pictureImageView.image = secondImage
+
+            if secondImage != ""{
+                let url = URL(string: secondImage as String!)
+                let fetchResult: PHFetchResult = PHAsset.fetchAssets(withALAssetURLs: [url!], options: nil)
+                let asset: PHAsset = (fetchResult.firstObject! as PHAsset)
+                let manager: PHImageManager = PHImageManager()
+                manager.requestImage(for: asset,targetSize: CGSize(width: 128, height: 122),contentMode: .aspectFill,options: nil) { (image, info) -> Void in
+                    self.pictureImageView.image = image
+                }
+            }
             print("secondImageの中身\(secondImage)")
         }
         
         datePickerChanged()
         
-        print(mode)
-        
+        print("modeの中身\(mode)")
+        print("mode2の中身\(mode2)")
         print(selectDate)
         print("TableViewController表示されたよ")
         print("受け取った行番号\(passedIndex)")
         
-//        titleLabel.text = param
-//        txtView.text = param2
         kurikaeshiPicker.delegate = self as! UIPickerViewDelegate
         kurikaeshiPicker.dataSource = self as! UIPickerViewDataSource
         }
@@ -316,6 +372,26 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
     // pickerが選択された際に呼ばれるデリゲートメソッド.
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         kurikaeshiDetail.text = texts[row]
+    }
+    
+    //セグエを使って、
+    override func prepare(for segue: UIStoryboardSegue,sender: Any?) {
+        
+        let dvc:PictureViewController = segue.destination as! PictureViewController
+        dvc.selectDate = selectDate
+        
+        if (segue.identifier == "showImage"){
+            
+            if mode == "A"{
+                dvc.mode = "A"
+                dvc.mode2 = "Show"
+                dvc.secondImage = secondImage
+            }else if mode == "E" {
+                dvc.mode = "E"
+                dvc.mode2 = "Show"
+                dvc.secondImage = secondImage
+            }
+        }
     }
 
 
