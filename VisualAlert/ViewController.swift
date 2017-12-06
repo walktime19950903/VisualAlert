@@ -179,7 +179,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         if (segue.identifier == "showDetail"){
             let dvc:TableViewController = segue.destination as! TableViewController
             dvc.selectDate = selectDate
-            dvc.mode = "E"
+            dvc.mode = "Edit"
         }else if (segue.identifier == "newSegue"){
             
             let dvc1:PictureViewController = segue.destination as! PictureViewController

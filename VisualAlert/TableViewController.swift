@@ -5,7 +5,7 @@ import MobileCoreServices
 //import AssetsLibrary
 
 
-class TableViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
+class TableViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UITextViewDelegate {
     
  
     var selectDate:Date = Date()
@@ -26,34 +26,33 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
     @IBOutlet weak var kurikaeshiPicker: UIPickerView!
     @IBOutlet weak var kurikaeshiDetail: UILabel!
     
-    @IBOutlet weak var gazouLabel: UILabel!
+    @IBOutlet weak var gazouLabel: UILabel! //「画像選択」ラベル
     @IBOutlet weak var doneButton: UIBarButtonItem!//完了ボタン
-    @IBOutlet weak var placeHolder: UILabel!//プレースホルダー
+    @IBOutlet weak var placeHolder: UILabel!//メモ欄プレースホルダー
     
     let texts = ["通知なし","1回","10分","30分","1時間","毎日","毎週","毎月"]
    
-    //textviewがフォーカスされたら、Labelを非表示
-    func textViewShouldBeginEditing(textView: UITextView) -> Bool
-    {
+    //textviewがフォーカスされたら、メモ欄のプレースホルダーを非表示
+    func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
+        
+        //        //完了ボタンの押せるか押せないか
+        //        if titleLabel == nil{
+        //            doneButton.isEnabled = true
+        //        }
 
-//        //完了ボタンの押せるか押せないか
-//        if titleLabel == nil{
-//            doneButton.isEnabled = true
-//        }
-
+        
         placeHolder.isHidden = true
         return true
     }
 
     //textviewからフォーカスが外れて、TextViewが空だったらLabelを再び表示
-    func textViewDidEndEditing(textView: UITextView) -> Bool {
-
+    func textViewDidEndEditing(_ textView: UITextView) {
+        
         if(txtView.text.isEmpty){
             placeHolder.isHidden = false
         }
         // キーボードを隠す
         txtView.resignFirstResponder()
-        return true
     }
 
     
@@ -164,8 +163,42 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
                 }catch{
             }
         //セルが押されて遷移してきた時の処理
-        }else if mode == "E"{
+        }else if mode == "Edit"{
             
+            //どのエンティティからデータを取得してくるか設定（ToDoエンティティ）
+            let query:NSFetchRequest<TODO> = TODO.fetchRequest()
+            
+            
+            //絞り込み検索（ここを追加！！！！！！）---------------------------------
+            //絞り込みの条件　saveDate = %@ のsaveDateはattribute名
+            let saveDatePredicate = NSPredicate(format: "saveDate = %@", selectDate as CVarArg)
+            query.predicate = saveDatePredicate
+            
+            //----------------------------------------------------------------
+            //レコード（行）の即時保存
+            do{
+                //データを一括取得
+                let fetchResults = try viewContext.fetch(query)
+                
+                //きちんと保存できてるか、一行ずつ表示（デバッグエリア）
+                for result: AnyObject in fetchResults {
+                    
+                    //更新する対象のデータをNSManagedObjectにダウンキャスト変換そうすることにより編集が可能になる
+                    let record = result as! NSManagedObject
+                    
+                    //更新したいデータのセット
+                    record.setValue(titleLabel.text, forKey: "title")
+                    record.setValue(txtView.text, forKey: "memo")
+                    record.setValue(secondImage, forKey: "image")
+                    
+                    //更新を即時保存
+                    try viewContext.save()
+                }
+            }catch{
+                //エラーが発生したときに行う例外処理を書いておく場所
+            }
+        }
+        if mode2 == "ShowBack"{
             //どのエンティティからデータを取得してくるか設定（ToDoエンティティ）
             let query:NSFetchRequest<TODO> = TODO.fetchRequest()
             
@@ -247,10 +280,19 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
                 titleLabel.text = title
                 txtView.text = memo
                 
-                if mode == "E"{
-                secondImage = image!
+                if mode == "Edit"{
+                    
+                    secondImage = image!
+                    
+                } else if mode2 == "ShowBack"{
+                    let url = URL(string: secondImage as String!)
+                    let fetchResult: PHFetchResult = PHAsset.fetchAssets(withALAssetURLs: [url!], options: nil)
+                    let asset: PHAsset = (fetchResult.firstObject! as PHAsset)
+                    let manager: PHImageManager = PHImageManager()
+                    manager.requestImage(for: asset,targetSize: CGSize(width: 128, height: 122),contentMode: .aspectFill,options: nil) { (image, info) -> Void in
+                        self.pictureImageView.image = image
+                    }
                 }
-                
                 if secondImage != ""{
                     let url = URL(string: secondImage as String!)
                     let fetchResult: PHFetchResult = PHAsset.fetchAssets(withALAssetURLs: [url!], options: nil)
@@ -282,11 +324,10 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         
-
         
-    if mode == "E" || mode2 == "ShowBack"{
+    if mode == "Edit" || mode2 == "ShowBack"{
         read()
-            print("secondの中身:\(secondImage)")
+            print("secondImageの中身:\(secondImage)")
         }else if mode == "A"{
 
             if secondImage != ""{
@@ -386,8 +427,11 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
                 dvc.mode = "A"
                 dvc.mode2 = "Show"
                 dvc.secondImage = secondImage
-            }else if mode == "E" {
+            }else if mode == "Edit" {
                 dvc.mode = "E"
+                dvc.mode2 = "Show"
+                dvc.secondImage = secondImage
+            }else if mode2 == "ShowBack"{
                 dvc.mode2 = "Show"
                 dvc.secondImage = secondImage
             }
