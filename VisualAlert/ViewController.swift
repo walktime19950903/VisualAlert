@@ -7,6 +7,7 @@ import MobileCoreServices
 class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource{
 
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var newButton: UIButton!
     
     
     
@@ -18,6 +19,11 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // 編集ボタンを左上に配置
+        navigationItem.rightBarButtonItem = editButtonItem
+        //角の丸み　border-radius
+        newButton.layer.cornerRadius = 10
     }
     
     //すでに存在するデータの読み込み処理
@@ -67,16 +73,19 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         tableView.reloadData()
     }
     
+    
+//ここからセルの編集モードのやつーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
+        tableView.isEditing = editing
+    }
 
-    //ボタンの文字や背景色を変えたい場合の設定
-    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        
-        let deleteButton: UITableViewRowAction = UITableViewRowAction(style: .normal, title: "削除") { (action, index) -> Void in
-            self.contentTitle.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with:  UITableViewRowAnimation.automatic)
-        }
-        deleteButton.backgroundColor = UIColor.red
-        
+
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         
         let appDelegate: AppDelegate = UIApplication.shared.delegate as! AppDelegate
         let viewContext = appDelegate.persistentContainer.viewContext
@@ -92,6 +101,14 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         
         //----------------------------------------------------------------
         
+        //        let deleteButton: UITableViewRowAction = UITableViewRowAction(style: .normal, title: "削除") { (action, index) -> Void in
+        self.contentTitle.remove(at: indexPath.row)
+        tableView.deleteRows(at: [indexPath as IndexPath], with:  UITableViewRowAnimation.automatic)
+        
+        //        }
+        //        deleteButton.backgroundColor = UIColor.red
+        
+        
         do {
             let fetchResults = try viewContext.fetch(query)
             for result: AnyObject in fetchResults {
@@ -102,34 +119,41 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         } catch {
         }
         
-//        //再読み込み
-//        read()
-        tableView.reloadData()
-        
-//       print("##### データ削除開始 #####")
-//        //iOS9以前の削除方法: フェッチして削除
-//        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-//        let managedObjectContext = appDelegate.managedObjectContext
-//        
-//        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "TODO")
-//        let predicate = NSPredicate(format: "price=%d", 999) //削除するオブジェクトの検索条件
-//        fetchRequest.predicate = predicate
-//        do {
-//            let books = try managedObjectContext.executeFetchRequest(fetchRequest) as! [Book]
-//            for book in books {
-//                managedObjectContext.deleteObject(book)
-//            }
-//            try managedObjectContext.save()
-//        } catch let error as NSError {
-//            fatalError("Failed to delete books: \(error)")
-//        }
-//        print("##### データ削除終了 #####")
-        
-        return [deleteButton]
-        
-       
-        
+        //        // 先にデータを更新する
+        //        tableView.reloadData()
     }
+
+    //並び替え可能なセルの設定
+//    func tableView(_ tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+//
+//    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+//        return true
+//    }
+//
+//
+//
+//
+//    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+//
+//        let targetTitle = contentTitle[sourceIndexPath.row]
+//        if let index = contentTitle.index(of: targetTitle) {
+//            contentTitle.remove(at: index)
+//            contentTitle.insert(targetTitle, at: destinationIndexPath.row)
+//        }
+//         tableView.reloadData()
+//    }
+    
+    //通常モードでは削除できないようにする
+    
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+        if tableView.isEditing {
+            return UITableViewCellEditingStyle.delete
+        } else {
+            return UITableViewCellEditingStyle.none
+        }
+    }
+//ここまで編集モードのやつ--------------------------------------------------------------------------ーーーーーーーーーーーーーーーーーーーー〜〜ーーーーーーーー
+    
     
     
     //MARK:TableView用の処理

@@ -47,6 +47,9 @@ class PictureViewController: UIViewController,UIImagePickerControllerDelegate,UI
              nextButton.setTitle("次へ", for: .normal)
              choosePicture.isHidden = true
         }
+        
+        //角の丸み　border-radius
+        nextButton.layer.cornerRadius = 15
     }
 
     // 画像の拡大率

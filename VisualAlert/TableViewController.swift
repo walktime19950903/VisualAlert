@@ -49,16 +49,26 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
         txtView.resignFirstResponder()
     }
 
+    //タイトル欄の値が変わった時に呼び出される処理
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
 //                完了ボタンの押せるか押せないか
-                if titleLabel.text == ""{
+            if titleLabel.text == ""{
                     doneButton.isEnabled = false
-                    doneButton.tintColor = UIColor.darkGray
                 }else{
                     doneButton.isEnabled = true
-                    doneButton.tintColor = UIColor.blue
+//                    doneButton.tintColor = UIColor.default
         }
         return true
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextFieldDidEndEditingReason) {
+        //                完了ボタンの押せるか押せないか
+        if titleLabel.text == ""{
+            doneButton.isEnabled = false
+        }else{
+            doneButton.isEnabled = true
+            //                    doneButton.tintColor = UIColor.default
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -70,7 +80,6 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
 //                完了ボタンの押せるか押せないか
         if titleLabel.text == ""{
             doneButton.isEnabled = false
-            doneButton.tintColor = UIColor.darkGray
         }
     }
     
@@ -185,9 +194,9 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
             }
         }
         
-        if titleLabel.text == "" {
+        if pictureImageView.image == nil {
             //部品となるアラートを作成
-            let alert = UIAlertController(title: "タイトルが記入されていません", message: "保存してもよろしいですか？", preferredStyle: .alert)
+            let alert = UIAlertController(title: "画像が選択されてません。", message: "保存してもよろしいですか？", preferredStyle: .alert)
             
             let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler:{
                 (action: UIAlertAction!) in  DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
