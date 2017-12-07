@@ -67,14 +67,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         tableView.reloadData()
     }
     
-    //セルをスライドした時の処理
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            contentTitle.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        }
-    }
-    
+
     //ボタンの文字や背景色を変えたい場合の設定
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         
@@ -85,7 +78,35 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         deleteButton.backgroundColor = UIColor.red
         
         
-//        print("##### データ削除開始 #####")
+        let appDelegate: AppDelegate = UIApplication.shared.delegate as! AppDelegate
+        let viewContext = appDelegate.persistentContainer.viewContext
+        let query: NSFetchRequest<TODO> = TODO.fetchRequest()
+        
+        var deleteCell = contentTitle[indexPath.row]
+        let search = deleteCell["saveDate"] as! Date
+        
+        //絞り込み検索（ここを追加！！！！！！）---------------------------------
+        //絞り込みの条件　saveDate = %@ のsaveDateはattribute名
+        let saveDatePredicate = NSPredicate(format: "saveDate = %@", search as CVarArg)
+        query.predicate = saveDatePredicate
+        
+        //----------------------------------------------------------------
+        
+        do {
+            let fetchResults = try viewContext.fetch(query)
+            for result: AnyObject in fetchResults {
+                let record = result as! NSManagedObject
+                viewContext.delete(record)
+            }
+            try viewContext.save()
+        } catch {
+        }
+        
+//        //再読み込み
+//        read()
+        tableView.reloadData()
+        
+//       print("##### データ削除開始 #####")
 //        //iOS9以前の削除方法: フェッチして削除
 //        let appDelegate = UIApplication.shared.delegate as! AppDelegate
 //        let managedObjectContext = appDelegate.managedObjectContext
@@ -105,6 +126,9 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
 //        print("##### データ削除終了 #####")
         
         return [deleteButton]
+        
+       
+        
     }
     
     

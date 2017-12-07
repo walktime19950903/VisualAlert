@@ -5,7 +5,7 @@ import MobileCoreServices
 //import AssetsLibrary
 
 
-class TableViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UITextViewDelegate {
+class TableViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UITextViewDelegate,UITextFieldDelegate {
     
  
     var selectDate:Date = Date()
@@ -35,12 +35,6 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
     //textviewがフォーカスされたら、メモ欄のプレースホルダーを非表示
     func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
         
-        //        //完了ボタンの押せるか押せないか
-        //        if titleLabel == nil{
-        //            doneButton.isEnabled = true
-        //        }
-
-        
         placeHolder.isHidden = true
         return true
     }
@@ -55,6 +49,17 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
         txtView.resignFirstResponder()
     }
 
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+//                完了ボタンの押せるか押せないか
+                if titleLabel.text == ""{
+                    doneButton.isEnabled = false
+                    doneButton.tintColor = UIColor.darkGray
+                }else{
+                    doneButton.isEnabled = true
+                    doneButton.tintColor = UIColor.blue
+        }
+        return true
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         if secondImage == ""{
@@ -62,72 +67,19 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
         }else{
             gazouLabel.isHidden = true
         }
+//                完了ボタンの押せるか押せないか
+        if titleLabel.text == ""{
+            doneButton.isEnabled = false
+            doneButton.tintColor = UIColor.darkGray
+        }
     }
     
-    
+    //画像選択を押した時の処理
     @IBAction func tapImage(_ sender: UITapGestureRecognizer) {
-        
         print("イメージタップされたよ")
-        
-//        // ユーザーに許可を促す.
-//        PHPhotoLibrary.requestAuthorization { (status) -> Void in
-//
-//        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.photoLibrary) {
-//            //写真ライブラリ(カメラロール)表示用のViewControllerを宣言
-//            let controller = UIImagePickerController()
-//
-//            controller.delegate = self
-//            //新しく宣言したViewControllerでカメラとカメラロールのどちらを表示するかを指定
-//            controller.sourceType = UIImagePickerControllerSourceType.photoLibrary
-//            //トリミング
-//            controller.allowsEditing = true
-//            //新たに追加したカメラロール表示ViewControllerをpresentViewControllerにする
-//            self.present(controller, animated: true, completion: nil)
-//            }
-//        }
     }
 
-    
-    // 写真を選んだ後に呼ばれる処理
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        
-//        //写真を文字列に変換
-//        let assetURL:AnyObject = info[UIImagePickerControllerReferenceURL]! as AnyObject
-//
-//        let strURL:String = assetURL.description
-//
-//
-//        print("写真のURL:\(letterImage)")
-//
-////        // ユーザーデフォルトを用意する
-////        let myDefault = UserDefaults.standard
-////
-////        // データを書き込んで
-////        myDefault.set(strURL, forKey: "selectedPhotoURL")
-////
-////        // 即反映させる
-////        myDefault.synchronize()
-//
-//
-//        if strURL != nil{
-//            let url = URL(string: strURL as String!)
-//            let fetchResult: PHFetchResult = PHAsset.fetchAssets(withALAssetURLs: [url!], options: nil)
-//            let asset: PHAsset = (fetchResult.firstObject! as PHAsset)
-//            let manager: PHImageManager = PHImageManager()
-//            manager.requestImage(for: asset,targetSize: CGSize(width: 128, height: 122),contentMode: .aspectFill,options: nil) { (image, info) -> Void in
-//                self.pictureImageView.image = image
-//        }
-//            self.pictureImageView.image = info[UIImagePickerControllerOriginalImage]! as! UIImage
-//        //閉じる処理
-//        picker.dismiss(animated: true, completion: nil)
-//
-//            //メンバ変数に写真のURLを保存
-//            self.letterImage = strURL
-//            }
 
-    }
-    
-    
     //完了ボタンが押された時発動
     @IBAction func tapSave(_ sender: UIBarButtonItem) {
         
@@ -232,6 +184,33 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
                 //エラーが発生したときに行う例外処理を書いておく場所
             }
         }
+        
+        if titleLabel.text == "" {
+            //部品となるアラートを作成
+            let alert = UIAlertController(title: "タイトルが記入されていません", message: "保存してもよろしいですか？", preferredStyle: .alert)
+            
+            let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler:{
+                (action: UIAlertAction!) in  DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    // 0.5秒後に実行したい処理
+                    self.navigationController?.popToRootViewController(animated: true)
+                }
+                print("OK")
+            })
+
+            // キャンセルボタン
+            let cancelAction: UIAlertAction = UIAlertAction(title: "キャンセル", style: UIAlertActionStyle.cancel, handler:{
+                (action: UIAlertAction!) -> Void in
+                print("Cancel")
+            })
+            
+            // ③ UIAlertControllerにActionを追加
+            alert.addAction(cancelAction)
+            alert.addAction(defaultAction)
+            
+            // ④ Alertを表示
+            present(alert, animated: true, completion: nil)
+        }
+        
         //最初の画面に戻る
         self.navigationController?.popToRootViewController(animated: true)
       }
