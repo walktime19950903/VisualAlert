@@ -2,6 +2,7 @@ import UIKit
 import CoreData
 import Photos
 import MobileCoreServices
+import UserNotifications //ローカル通知に必要なフレームワーク
 //import AssetsLibrary
 
 
@@ -77,6 +78,13 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
         }else{
             gazouLabel.isHidden = true
         }
+        
+        if txtView.text == ""{
+            placeHolder.isHidden = false
+        }else if txtView.text != "" {
+            placeHolder.isHidden = true
+        }
+        
 //                完了ボタンの押せるか押せないか
         if titleLabel.text == ""{
             doneButton.isEnabled = false
@@ -92,6 +100,33 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
     //完了ボタンが押された時発動
     @IBAction func tapSave(_ sender: UIBarButtonItem) {
         
+        
+//        if pictureImageView.image == nil {
+//            //部品となるアラートを作成
+//            let alert = UIAlertController(title: "画像が選択されてません。", message: "保存してもよろしいですか？", preferredStyle: .alert)
+//
+//            let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler:{
+//                (action: UIAlertAction!) in  DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+//                    // 0.5秒後に実行したい処理
+//                    self.navigationController?.popToRootViewController(animated: true)
+//                }
+//                print("OK")
+//            })
+//
+//            // キャンセルボタン
+//            let cancelAction: UIAlertAction = UIAlertAction(title: "キャンセル", style: UIAlertActionStyle.cancel, handler:{
+//                (action: UIAlertAction!) -> Void in
+//                print("Cancel")
+//            })
+//
+//            // ③ UIAlertControllerにActionを追加
+//            alert.addAction(cancelAction)
+//            alert.addAction(defaultAction)
+//
+//            // ④ Alertを表示
+//            present(alert, animated: true, completion: nil)
+//        }
+        
         //Appdelegateを使う用意をしておく（インスタンス化）
         let appDelegate: AppDelegate = UIApplication.shared.delegate as!AppDelegate
         
@@ -102,7 +137,7 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
         let ToDo = NSEntityDescription.entity(forEntityName: "TODO", in: viewContext)
         
 
-        if mode == "A" {
+        if mode == "A"{
             
         //エンティティにレコード（行）を挿入するためのオブジェクトを作成
         let newRecord = NSManagedObject(entity: ToDo!, insertInto: viewContext)
@@ -123,6 +158,53 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
                     try viewContext.save()
                 }catch{
             }
+            
+            
+            
+//       通知諸々の処理ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+            
+            //いま選択されている日時を文字列に変換
+            var targetDate = datePicker.date
+            
+            var df = DateFormatter()
+            df.dateFormat = "yyyy/MM/dd hh:mm:00"
+            
+            var strDate = df.string(from: targetDate)
+            
+            //Notificationのインスタンス作成
+            let content = UNMutableNotificationContent()
+            //タイトル設定
+            content.title = "指定時間になりました"
+            
+            //本文設定
+            content.body = "\(strDate)ですよ"
+            
+            //音設定
+            content.sound = UNNotificationSound.default()
+            
+            //トリガー設定（いつ発火するか。今回はDatepickerで指定した日時）
+            //        let trigger = UNTimeIntervalNotificationTrigger.init(timeInterval: 10, repeats: false)
+            var dc = Calendar.current.dateComponents(in: TimeZone.current, from: targetDate)
+            
+            var setDc = DateComponents()
+            setDc.year = dc.year!
+            setDc.month = dc.month!
+            setDc.day = dc.day!
+            
+            setDc.hour = dc.hour!
+            setDc.minute = dc.minute!
+            setDc.second = 0
+            
+            let trigger = UNCalendarNotificationTrigger(dateMatching: setDc, repeats: false)
+            
+            //リクエストの生成(通知IDをセット)
+            let request = UNNotificationRequest.init(identifier: "ID_SpecificTime", content: content, trigger: trigger)
+            
+            //通知の設定
+            let center = UNUserNotificationCenter.current()
+            center.add(request){(error) in }
+            
+            
         //セルが押されて遷移してきた時の処理
         }else if mode == "Edit"{
             
@@ -193,32 +275,7 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
                 //エラーが発生したときに行う例外処理を書いておく場所
             }
         }
-        
-        if pictureImageView.image == nil {
-            //部品となるアラートを作成
-            let alert = UIAlertController(title: "画像が選択されてません。", message: "保存してもよろしいですか？", preferredStyle: .alert)
-            
-            let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler:{
-                (action: UIAlertAction!) in  DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                    // 0.5秒後に実行したい処理
-                    self.navigationController?.popToRootViewController(animated: true)
-                }
-                print("OK")
-            })
 
-            // キャンセルボタン
-            let cancelAction: UIAlertAction = UIAlertAction(title: "キャンセル", style: UIAlertActionStyle.cancel, handler:{
-                (action: UIAlertAction!) -> Void in
-                print("Cancel")
-            })
-            
-            // ③ UIAlertControllerにActionを追加
-            alert.addAction(cancelAction)
-            alert.addAction(defaultAction)
-            
-            // ④ Alertを表示
-            present(alert, animated: true, completion: nil)
-        }
         
         //最初の画面に戻る
         self.navigationController?.popToRootViewController(animated: true)

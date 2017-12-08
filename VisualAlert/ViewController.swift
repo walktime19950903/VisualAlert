@@ -3,6 +3,7 @@ import UIKit
 import CoreData
 import Photos
 import MobileCoreServices
+import UserNotifications //ローカル通知に必要なフレームワーク
 
 class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource{
 
@@ -19,6 +20,10 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //通知機能の許可を促す処理
+        let center = UNUserNotificationCenter.current()
+        center.requestAuthorization(options: [.alert,.sound]){(granted,error) in }
         
         // 編集ボタンを左上に配置
         navigationItem.rightBarButtonItem = editButtonItem
@@ -119,8 +124,8 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         } catch {
         }
         
-        //        // 先にデータを更新する
-        //        tableView.reloadData()
+                // 先にデータを更新する
+                tableView.reloadData()
     }
 
     //並び替え可能なセルの設定
