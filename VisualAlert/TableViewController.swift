@@ -16,6 +16,8 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
     var mode:String = ""
     var mode2:String = ""
     
+    var saveDateID: Date = Date()
+    
     //画像のメンバ変数（画像のURLが入っている）
     var letterImage = ""
     
@@ -101,32 +103,6 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
     @IBAction func tapSave(_ sender: UIBarButtonItem) {
         
         
-//        if pictureImageView.image == nil {
-//            //部品となるアラートを作成
-//            let alert = UIAlertController(title: "画像が選択されてません。", message: "保存してもよろしいですか？", preferredStyle: .alert)
-//
-//            let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler:{
-//                (action: UIAlertAction!) in  DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-//                    // 0.5秒後に実行したい処理
-//                    self.navigationController?.popToRootViewController(animated: true)
-//                }
-//                print("OK")
-//            })
-//
-//            // キャンセルボタン
-//            let cancelAction: UIAlertAction = UIAlertAction(title: "キャンセル", style: UIAlertActionStyle.cancel, handler:{
-//                (action: UIAlertAction!) -> Void in
-//                print("Cancel")
-//            })
-//
-//            // ③ UIAlertControllerにActionを追加
-//            alert.addAction(cancelAction)
-//            alert.addAction(defaultAction)
-//
-//            // ④ Alertを表示
-//            present(alert, animated: true, completion: nil)
-//        }
-        
         //Appdelegateを使う用意をしておく（インスタンス化）
         let appDelegate: AppDelegate = UIApplication.shared.delegate as!AppDelegate
         
@@ -135,8 +111,8 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
         
         //ToDoエンティティオブジェクトを作成
         let ToDo = NSEntityDescription.entity(forEntityName: "TODO", in: viewContext)
+    
         
-
         if mode == "A"{
             
         //エンティティにレコード（行）を挿入するためのオブジェクトを作成
@@ -198,12 +174,15 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
             let trigger = UNCalendarNotificationTrigger(dateMatching: setDc, repeats: false)
             
             //リクエストの生成(通知IDをセット)
-            let request = UNNotificationRequest.init(identifier: "ID_SpecificTime", content: content, trigger: trigger)
+            let request = UNNotificationRequest.init(identifier: "ID_SpecificTime.\(saveDateID)", content: content, trigger: trigger)
             
             //通知の設定
             let center = UNUserNotificationCenter.current()
             center.add(request){(error) in }
             
+            
+            print("saveDateID\(saveDateID)")
+//        ここまで繰り返しの処理ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
             
         //セルが押されて遷移してきた時の処理
         }else if mode == "Edit"{
@@ -469,7 +448,6 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
         if (segue.identifier == "showImage"){
             
             if mode == "A"{
-                dvc.mode = "A"
                 dvc.mode2 = "Show"
                 dvc.secondImage = secondImage
             }else if mode == "Edit" {

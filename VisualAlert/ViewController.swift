@@ -27,8 +27,10 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         
         // 編集ボタンを左上に配置
         navigationItem.rightBarButtonItem = editButtonItem
+
         //角の丸み　border-radius
         newButton.layer.cornerRadius = 10
+        
     }
     
     //すでに存在するデータの読み込み処理
