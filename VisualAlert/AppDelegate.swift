@@ -8,12 +8,23 @@
 
 import UIKit
 import CoreData
-
+import UserNotifications
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate{
 
     var window: UIWindow?
+    
+    
+    //フォアグラウンドで通知を送る関数
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                willPresent notification: UNNotification,
+                                withCompletionHandler handlerBlock:
+        (UNNotificationPresentationOptions) -> Void) {
+        // Roll banner and sound alert
+        handlerBlock([.alert, .sound])
+    }
+    
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.

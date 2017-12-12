@@ -6,7 +6,9 @@ import UserNotifications //ローカル通知に必要なフレームワーク
 //import AssetsLibrary
 
 
-class TableViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UITextViewDelegate,UITextFieldDelegate {
+class TableViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UITextViewDelegate,UITextFieldDelegate,UNUserNotificationCenterDelegate {
+
+    
     
  
     var selectDate:Date = Date()
@@ -97,10 +99,22 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
     @IBAction func tapImage(_ sender: UITapGestureRecognizer) {
         print("イメージタップされたよ")
     }
+    
+    //フォアグラウンドで通知を出す機能
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                willPresent notification: UNNotification,
+                                withCompletionHandler handlerBlock:
+        (UNNotificationPresentationOptions) -> Void) {
+        // Roll banner and sound alert
+        handlerBlock([.alert, .sound])
+    }
 
 
     //完了ボタンが押された時発動
     @IBAction func tapSave(_ sender: UIBarButtonItem) {
+        
+        
+        NotificationCenter.default.removeObserver(self)
         
         
         //Appdelegateを使う用意をしておく（インスタンス化）
@@ -111,9 +125,75 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
         
         //ToDoエンティティオブジェクトを作成
         let ToDo = NSEntityDescription.entity(forEntityName: "TODO", in: viewContext)
+        
+        //       通知諸々の処理ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+        
+        //いま選択されている日時を文字列に変換
+        var targetDate = datePicker.date
+        
+        var df = DateFormatter()
+        df.dateFormat = "yyyy/MM/dd hh:mm:00"
+        
+        var strDate = df.string(from: targetDate)
+        
+        //Notificationのインスタンス作成
+        let content = UNMutableNotificationContent()
+        //タイトル設定
+        content.title = "タイトル：\(titleLabel.text!)"
+        
+        //本文設定
+        content.body = "メモ内容：\(txtView.text!)"
+        
+        //音設定
+        content.sound = UNNotificationSound.default()
+        
+//        // 2
+//        let imageName = "applelogo"
+//
+//        let imageURL = URL(fileURLWithPath: secondImage)
+//
+//        let attachment = try! UNNotificationAttachment(identifier: "image.\(saveDateID)", url: imageURL, options: .none)
+//
+//        let fileURL = URL(fileURLWithPath: secondImage)
+//
+//        let attachment = UNNotificationAttachment(identifier: "image",
+//                                                  url: fileURL,
+//                                                  options: nil)
+        
+//        content.attachments = [attachment]
+        
+        
+        
+        //トリガー設定（いつ発火するか。今回はDatepickerで指定した日時）
+        //        let trigger = UNTimeIntervalNotificationTrigger.init(timeInterval: 10, repeats: false)
+        var dc = Calendar.current.dateComponents(in: TimeZone.current, from: targetDate)
+        
+        var setDc = DateComponents()
+        setDc.year = dc.year!
+        setDc.month = dc.month!
+        setDc.day = dc.day!
+        
+        setDc.hour = dc.hour!
+        setDc.minute = dc.minute!
+        setDc.second = 0
+        
+        let trigger = UNCalendarNotificationTrigger(dateMatching: setDc, repeats: false)
+        
+        //リクエストの生成(通知IDをセット)
+        let request = UNNotificationRequest.init(identifier: "ID_SpecificTime.\(saveDateID)", content: content, trigger: trigger)
+        
+        //通知の設定
+        let center = UNUserNotificationCenter.current()
+        center.add(request){(error) in }
+        
+        
+        print("saveDateID\(saveDateID)")
+        //        ここまで繰り返しの処理ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+        
+
     
         
-        if mode == "A"{
+        if mode == "Add"{
             
         //エンティティにレコード（行）を挿入するためのオブジェクトを作成
         let newRecord = NSManagedObject(entity: ToDo!, insertInto: viewContext)
@@ -127,7 +207,7 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
         newRecord.setValue(titleLabel.text, forKey: "title")
         newRecord.setValue(secondImage, forKey:"image")
         newRecord.setValue(Date(), forKey: "kurikaeshi")
-        newRecord.setValue(Date(), forKey: "time")
+        newRecord.setValue(datePicker.date, forKey: "time")
             
             //レコード（行）の即時保存
             do{
@@ -136,56 +216,8 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
             }
             
             
-            
-//       通知諸々の処理ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
-            
-            //いま選択されている日時を文字列に変換
-            var targetDate = datePicker.date
-            
-            var df = DateFormatter()
-            df.dateFormat = "yyyy/MM/dd hh:mm:00"
-            
-            var strDate = df.string(from: targetDate)
-            
-            //Notificationのインスタンス作成
-            let content = UNMutableNotificationContent()
-            //タイトル設定
-            content.title = "指定時間になりました"
-            
-            //本文設定
-            content.body = "\(strDate)ですよ"
-            
-            //音設定
-            content.sound = UNNotificationSound.default()
-            
-            //トリガー設定（いつ発火するか。今回はDatepickerで指定した日時）
-            //        let trigger = UNTimeIntervalNotificationTrigger.init(timeInterval: 10, repeats: false)
-            var dc = Calendar.current.dateComponents(in: TimeZone.current, from: targetDate)
-            
-            var setDc = DateComponents()
-            setDc.year = dc.year!
-            setDc.month = dc.month!
-            setDc.day = dc.day!
-            
-            setDc.hour = dc.hour!
-            setDc.minute = dc.minute!
-            setDc.second = 0
-            
-            let trigger = UNCalendarNotificationTrigger(dateMatching: setDc, repeats: false)
-            
-            //リクエストの生成(通知IDをセット)
-            let request = UNNotificationRequest.init(identifier: "ID_SpecificTime.\(saveDateID)", content: content, trigger: trigger)
-            
-            //通知の設定
-            let center = UNUserNotificationCenter.current()
-            center.add(request){(error) in }
-            
-            
-            print("saveDateID\(saveDateID)")
-//        ここまで繰り返しの処理ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
-            
         //セルが押されて遷移してきた時の処理
-        }else if mode == "Edit"{
+        }else if mode == "Edit" || mode == "Edit2"{
             
             //どのエンティティからデータを取得してくるか設定（ToDoエンティティ）
             let query:NSFetchRequest<TODO> = TODO.fetchRequest()
@@ -212,40 +244,7 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
                     record.setValue(titleLabel.text, forKey: "title")
                     record.setValue(txtView.text, forKey: "memo")
                     record.setValue(secondImage, forKey: "image")
-                    
-                    //更新を即時保存
-                    try viewContext.save()
-                }
-            }catch{
-                //エラーが発生したときに行う例外処理を書いておく場所
-            }
-        }
-        if mode2 == "ShowBack"{
-            //どのエンティティからデータを取得してくるか設定（ToDoエンティティ）
-            let query:NSFetchRequest<TODO> = TODO.fetchRequest()
-            
-            
-            //絞り込み検索（ここを追加！！！！！！）---------------------------------
-            //絞り込みの条件　saveDate = %@ のsaveDateはattribute名
-            let saveDatePredicate = NSPredicate(format: "saveDate = %@", selectDate as CVarArg)
-            query.predicate = saveDatePredicate
-            
-            //----------------------------------------------------------------
-            //レコード（行）の即時保存
-            do{
-                //データを一括取得
-                let fetchResults = try viewContext.fetch(query)
-                
-                //きちんと保存できてるか、一行ずつ表示（デバッグエリア）
-                for result: AnyObject in fetchResults {
-                    
-                    //更新する対象のデータをNSManagedObjectにダウンキャスト変換そうすることにより編集が可能になる
-                    let record = result as! NSManagedObject
-                    
-                    //更新したいデータのセット
-                    record.setValue(titleLabel.text, forKey: "title")
-                    record.setValue(txtView.text, forKey: "memo")
-                    record.setValue(secondImage, forKey: "image")
+                    record.setValue(datePicker.date, forKey: "time")
                     
                     //更新を即時保存
                     try viewContext.save()
@@ -255,7 +254,6 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
             }
         }
 
-        
         //最初の画面に戻る
         self.navigationController?.popToRootViewController(animated: true)
       }
@@ -283,6 +281,16 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
         query.predicate = saveDatePredicate
 //        ----------------------------------------------------------------
         
+        if mode == "Add" && secondImage != ""{
+            let url = URL(string: secondImage as String!)
+            let fetchResult: PHFetchResult = PHAsset.fetchAssets(withALAssetURLs: [url!], options: nil)
+            let asset: PHAsset = (fetchResult.firstObject! as PHAsset)
+            let manager: PHImageManager = PHImageManager()
+            manager.requestImage(for: asset,targetSize: CGSize(width: 128, height: 122),contentMode: .aspectFill,options: nil) { (image, info) -> Void in
+                self.pictureImageView.image = image
+            }
+        }
+        
         
         do{
             //データを一括取得
@@ -303,20 +311,13 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
                 //セルが押されて遷移してきた時に表示する内容
                 titleLabel.text = title
                 txtView.text = memo
+                datePicker.date = time!
                 
                 if mode == "Edit"{
-                    
                     secondImage = image!
-                    
-                } else if mode2 == "ShowBack"{
-                    let url = URL(string: secondImage as String!)
-                    let fetchResult: PHFetchResult = PHAsset.fetchAssets(withALAssetURLs: [url!], options: nil)
-                    let asset: PHAsset = (fetchResult.firstObject! as PHAsset)
-                    let manager: PHImageManager = PHImageManager()
-                    manager.requestImage(for: asset,targetSize: CGSize(width: 128, height: 122),contentMode: .aspectFill,options: nil) { (image, info) -> Void in
-                        self.pictureImageView.image = image
-                    }
+                   
                 }
+                
                 if secondImage != ""{
                     let url = URL(string: secondImage as String!)
                     let fetchResult: PHFetchResult = PHAsset.fetchAssets(withALAssetURLs: [url!], options: nil)
@@ -329,6 +330,17 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
 //                kurikaeshiPicker.delegate = kurikaeshi as! UIPickerViewDelegate
                 
                 var dic = ["title":title,"memo":memo,"kurikaeshi":kurikaeshi,"saveDate":saveDate,"time":time,"image":image] as[String : Any]
+                
+                
+                //日付を文字列に変換
+                let df = DateFormatter()
+                df.dateFormat = "yyyy/MM/dd hh:mm"
+                
+                //時差補正（日本時間に変更）
+                df.locale = NSLocale(localeIdentifier: "ja_JP") as! Locale!
+                
+                detailLabel.text = df.string(from: dic["time"] as! Date)
+                
                 contentTitle.append(dic as NSDictionary)
             }
         }catch{
@@ -348,26 +360,13 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-    if mode == "Edit" || mode2 == "ShowBack"{
         read()
-            print("secondImageの中身:\(secondImage)")
-        }else if mode == "A"{
-
-            if secondImage != ""{
-                let url = URL(string: secondImage as String!)
-                let fetchResult: PHFetchResult = PHAsset.fetchAssets(withALAssetURLs: [url!], options: nil)
-                let asset: PHAsset = (fetchResult.firstObject! as PHAsset)
-                let manager: PHImageManager = PHImageManager()
-                manager.requestImage(for: asset,targetSize: CGSize(width: 128, height: 122),contentMode: .aspectFill,options: nil) { (image, info) -> Void in
-                    self.pictureImageView.image = image
-                }
-            }
-            print("secondImageの中身\(secondImage)")
-        }
+        print("secondImageの中身:\(secondImage)")
+        print("secondImageの中身\(secondImage)")
+        print("デートピッカーの中身\(kurikaeshiDetail!)")
         
         datePickerChanged()
-        
+ 
         print("modeの中身\(mode)")
         print("mode2の中身\(mode2)")
         print(selectDate)
@@ -379,45 +378,17 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
         }
 
     
-    
+
     func datePickerChanged () {
         detailLabel.text = DateFormatter.localizedString(from: datePicker.date, dateStyle: DateFormatter.Style.short, timeStyle: DateFormatter.Style.short)
     }
-    
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if indexPath.section == 3 && indexPath.row == 0 {
-            toggleDatepicker()
-        }
-    }
-  
+
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    
-    var datePickerHidden = false
-    
-    
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if datePickerHidden && indexPath.section == 3 && indexPath.row == 1 {
-            return 0
-        }
-        else {
-//            return super.tableView(tableView, heightForRowAtIndexPath: indexPath)
-            return super.tableView(tableView, heightForRowAt: indexPath as! IndexPath)
-        }
-    }
-    
-    
-    func toggleDatepicker() {
-        datePickerHidden = !datePickerHidden
-        
-        tableView.beginUpdates()
-        tableView.endUpdates()
-    }
-    
+
     
     @IBAction func datePickerValue(sender: UIDatePicker) {
         datePickerChanged()
@@ -427,13 +398,13 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
-    
+
     //pickerに表示する値を返すデリゲートメソッド.
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return texts[row]
     }
-    
-    
+
+
     // pickerが選択された際に呼ばれるデリゲートメソッド.
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         kurikaeshiDetail.text = texts[row]
@@ -447,15 +418,14 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
         
         if (segue.identifier == "showImage"){
             
-            if mode == "A"{
-                dvc.mode2 = "Show"
+            if mode == "Add"{
+                dvc.mode = "Add"
                 dvc.secondImage = secondImage
             }else if mode == "Edit" {
-                dvc.mode = "E"
-                dvc.mode2 = "Show"
+                dvc.mode = "Edit2"
                 dvc.secondImage = secondImage
-            }else if mode2 == "ShowBack"{
-                dvc.mode2 = "Show"
+            }else if mode == "Edit2"{
+                dvc.mode = "Edit2"
                 dvc.secondImage = secondImage
             }
         }

@@ -197,7 +197,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
                 //時差補正（日本時間に変更）
                 df.locale = NSLocale(localeIdentifier: "ja_JP") as! Locale!
                 
-                cell.memoLabel.text = df.string(from: dic["saveDate"] as! Date)
+                cell.memoLabel.text = "通知時間：\(df.string(from: dic["time"] as! Date))"
                 }
         }else{
             cell.titleLabel.text = dic["title"] as! String
@@ -210,7 +210,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
             //時差補正（日本時間に変更）
             df.locale = NSLocale(localeIdentifier: "ja_JP") as! Locale!
             
-            cell.memoLabel.text = df.string(from: dic["saveDate"] as! Date)
+            cell.memoLabel.text = "通知時間：\(df.string(from: dic["time"] as! Date))"
             
         }
         //文字を設定したセルを返す
@@ -236,10 +236,8 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
             dvc.selectDate = selectDate
             dvc.mode = "Edit"
         }else if (segue.identifier == "newSegue"){
-            
             let dvc1:PictureViewController = segue.destination as! PictureViewController
-            dvc1.selectDate = selectDate
-            dvc1.mode = "A"
+            dvc1.mode = "Add"
         }
         
 //        if(segue.identifier == "showDetail") {

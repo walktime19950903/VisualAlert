@@ -24,8 +24,8 @@ class PictureViewController: UIViewController,UIImagePickerControllerDelegate,UI
         print("pictureviewcontrollerのmodeの中身\(mode)")
         print("pictureviewcontrollerのmode2の中身\(mode2)")
         
-        if mode2 == "Show"{
-            
+//        if mode == "Edit2"{
+        
             if secondImage != ""{
                 let url = URL(string: secondImage as String!)
                 let fetchResult: PHFetchResult = PHAsset.fetchAssets(withALAssetURLs: [url!], options: nil)
@@ -35,7 +35,7 @@ class PictureViewController: UIViewController,UIImagePickerControllerDelegate,UI
                     self.pictureImageView.image = image
                 }
             }
-        }
+//        }
         
         // imageViewにジェスチャーレコグナイザを設定する(ピンチ)
         let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(pinchAction(sender:)))
@@ -217,14 +217,16 @@ class PictureViewController: UIViewController,UIImagePickerControllerDelegate,UI
         dvc.selectDate = selectDate
         
         if (segue.identifier == "addPicture"){
-            if mode == "A"{
-                dvc.mode = "A"
+            if mode == "Add"{
+                dvc.mode = "Add"
                 dvc.secondImage = secondImage
-            }else if mode2 == "Show"{
-//                dvc.mode = "E"
-                dvc.mode2 = "ShowBack"
+            }else if mode == "Edit"{
+                dvc.mode = "Edit"
                 dvc.secondImage = secondImage
                 print("dvc.secondImageの中身\(dvc.secondImage)")
+            }else if mode == "Edit2"{
+                dvc.mode = "Edit2"
+                dvc.secondImage = secondImage
             }
         }
     }
