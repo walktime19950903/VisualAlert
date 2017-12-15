@@ -163,8 +163,18 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
     //完了ボタンが押された時発動
     @IBAction func tapSave(_ sender: UIBarButtonItem) {
         
+        let center = UNUserNotificationCenter.current()
         
-        NotificationCenter.default.removeObserver(self)
+        center.getPendingNotificationRequests { (requests: [UNNotificationRequest]) in
+            for request in requests {
+                if self.saveDateID != nil {
+                    center.removePendingNotificationRequests(withIdentifiers: [request.identifier])
+                }
+            }
+        }
+        
+        
+        
         UserDefaults.standard.removePersistentDomain(forName: appDomain)
         
         //Appdelegateを使う用意をしておく（インスタンス化）
@@ -198,7 +208,6 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
         content.sound = UNNotificationSound.default()
 
         
-        
         //トリガー設定（いつ発火するか。今回はDatepickerで指定した日時）
         //        let trigger = UNTimeIntervalNotificationTrigger.init(timeInterval: 10, repeats: false)
         
@@ -214,22 +223,25 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
         setDc.minute = dc.minute!
         setDc.second = 0
         
-        let trigger = UNCalendarNotificationTrigger(dateMatching: setDc, repeats: false)
+        let trigger = UNCalendarNotificationTrigger(dateMatching: setDc, repeats: true)
         
         // 5分間隔ごと
-        let repeatTrigger = UNTimeIntervalNotificationTrigger(timeInterval: 60, repeats: true)
+//        let repeatTrigger = UNTimeIntervalNotificationTrigger(timeInterval: 60, repeats: true)
         
         //通知時間リクエストの生成(通知IDをセット)
-        let request = UNNotificationRequest.init(identifier: "ID_SpecificTime.\(saveDateID)", content: content, trigger: trigger)
-        
-        //繰り返しリクエストの生成(通知IDをセット)
-        let repeatRequest = UNNotificationRequest.init(identifier: "ID_SpecificTime.\(saveDateID)", content: content, trigger: repeatTrigger)
+        let request = UNNotificationRequest.init(identifier: "\(saveDateID)", content: content, trigger: trigger)
         
         
-        //通知の設定
-        let center = UNUserNotificationCenter.current()
+        
+        
+//        //繰り返しリクエストの生成(通知IDをセット)
+//        let repeatRequest = UNNotificationRequest.init(identifier: "ID_SpecificTime.\(saveDateID)", content: content, trigger: repeatTrigger)
+        
+        
+//        //通知の設定
+//        let center = UNUserNotificationCenter.current()
+//        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ["\(saveDateID)"])
         center.add(request){(error) in }
-        center.add(repeatRequest){(error) in }
         
         print("saveDateID\(saveDateID)")
 //        ここまで繰り返しの処理ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
