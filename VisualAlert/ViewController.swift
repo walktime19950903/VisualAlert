@@ -54,7 +54,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
             //きちんと保存できてるか、一行ずつ表示（デバッグエリア）
             for result: AnyObject in fetchResults {
                 let memo :String? = result.value(forKey:"memo") as? String
-                let kurikaeshi :Date? = result.value(forKey:"kurikaeshi") as? Date
+                let kurikaeshi :Int? = result.value(forKey:"kurikaeshi") as? Int
                 let title :String? = result.value(forKey: "title") as? String
                 let image :String? = result.value(forKey: "image") as? String
                 let saveDate :Date? = result.value(forKey:"saveDate") as? Date

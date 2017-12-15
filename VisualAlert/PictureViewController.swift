@@ -2,16 +2,19 @@
 import UIKit
 import Photos
 import MobileCoreServices
+import CoreData
 
 class PictureViewController: UIViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate  {
 
     @IBOutlet weak var pictureImageView: UIImageView! //でかい方のImageView
     @IBOutlet weak var nextButton: UIButton!
     
+    //TODO(内容)を格納する配列TableView 表示用
+    var contentTitle:[NSDictionary] = []
     
     //画像のメンバ変数（画像のURLが入っている）
     var secondImage = ""
-    var selectDate = Date()
+    var selectDate:Date = Date()
     @IBOutlet weak var choosePicture: UILabel!
     
     var cameramode = ""
@@ -20,6 +23,8 @@ class PictureViewController: UIViewController,UIImagePickerControllerDelegate,UI
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        read()
         
         print("pictureviewcontrollerのmodeの中身\(mode)")
         print("pictureviewcontrollerのmode2の中身\(mode2)")
@@ -37,9 +42,6 @@ class PictureViewController: UIViewController,UIImagePickerControllerDelegate,UI
             }
 //        }
         
-        // imageViewにジェスチャーレコグナイザを設定する(ピンチ)
-        let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(pinchAction(sender:)))
-        pictureImageView.addGestureRecognizer(pinchGesture)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -48,44 +50,53 @@ class PictureViewController: UIViewController,UIImagePickerControllerDelegate,UI
              choosePicture.isHidden = true
         }
         
+        read()
+        
         //角の丸み　border-radius
         nextButton.layer.cornerRadius = 15
     }
-
-    // 画像の拡大率
-    var currentScale:CGFloat = 1.0
     
-    //画像縮小、拡大の関数
-    @objc func pinchAction(sender: UIPinchGestureRecognizer) {
-        // imageViewを拡大縮小する
-        // ピンチ中の拡大率は0.3〜2.5倍、指を離した時の拡大率は0.5〜2.0倍とする
-        switch sender.state {
-        case .began, .changed:
-            // senderのscaleは、指を動かしていない状態が1.0となる
-            // 現在の拡大率に、(scaleから1を引いたもの) / 10(補正率)を加算する
-            currentScale = currentScale + (sender.scale - 1) / 10
-            // 拡大率が基準から外れる場合は、補正する
-            if currentScale < 0.3 {
-                currentScale = 0.3
-            } else if currentScale > 2.5 {
-                currentScale = 2.5
-            }
-            // 計算後の拡大率で、imageViewを拡大縮小する
-            pictureImageView.transform = CGAffineTransform(scaleX: currentScale, y: currentScale)
-        default:
-            // ピンチ中と同様だが、拡大率の範囲が異なる
-            if currentScale < 0.5 {
-                currentScale = 0.5
-            } else if currentScale > 2.0 {
-                currentScale = 2.0
-            }
+    //すでに存在するデータの読み込み処理
+    func read(){
+        //一旦からにする（初期化）
+        contentTitle = []
+        
+        //AppDelegateを使う用意をしておく
+        let appDelegate:AppDelegate = UIApplication.shared.delegate as! AppDelegate
+        
+        //エンティティを操作するためのオブジェクトを作成
+        let viewContext = appDelegate.persistentContainer.viewContext
+        
+        //どのエンティティからデータを取得してくるか設定（ToDoエンティティ）
+        let query:NSFetchRequest<TODO> = TODO.fetchRequest()
+        
+        //        絞り込み検索（ここを追加！！！！！！）---------------------------------
+        //        絞り込みの条件　saveDate = %@ のsaveDateはattribute名
+        let saveDatePredicate = NSPredicate(format: "saveDate = %@", selectDate as CVarArg)
+        query.predicate = saveDatePredicate
+        //        ----------------------------------------------------------------
+        
+        
+        do{
+            //データを一括取得
+            let fetchResults = try viewContext.fetch(query)
             
-            // 拡大率が基準から外れている場合、指を離したときにアニメーションで拡大率を補正する
-            // 例えば指を離す前に拡大率が0.3だった場合、0.2秒かけて拡大率が0.5に変化する
-            UIView.animate(withDuration: 0.2, animations: {
-                self.pictureImageView.transform = CGAffineTransform(scaleX: self.currentScale, y: self.currentScale)
-            }, completion: nil)
-            
+            //きちんと保存できてるか、一行ずつ表示（デバッグエリア）
+            for result: AnyObject in fetchResults {
+                let memo :String? = result.value(forKey:"memo") as? String
+                let kurikaeshi :String? = result.value(forKey:"kurikaeshi") as? String
+                let title :String? = result.value(forKey: "title") as? String
+                let image :String? = result.value(forKey: "image") as? String
+                let saveDate :Date? = result.value(forKey:"saveDate") as? Date
+                let time :Date? = result.value(forKey:"time") as? Date
+                
+                
+                print("title:\(title!),memo:\(memo!),saveDate:\(saveDate!),time:\(time!),kurikaeshi:\(kurikaeshi!),image:\(image!)")
+                
+                var dic = ["memo":memo,"title":title,"saveDate":saveDate,"time":time,"kurikaeshi":kurikaeshi,"image":image] as[String : Any]
+                contentTitle.append(dic as NSDictionary)
+            }
+        }catch{
         }
     }
     

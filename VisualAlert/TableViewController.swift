@@ -9,7 +9,11 @@ import UserNotifications //ローカル通知に必要なフレームワーク
 class TableViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UITextViewDelegate,UITextFieldDelegate,UNUserNotificationCenterDelegate {
 
     
+    //UserDefaultを操作するためのオブジェクトを作成
+    var myDefault = UserDefaults.standard
+    var appDomain:String = Bundle.main.bundleIdentifier!
     
+
  
     var selectDate:Date = Date()
     var contentTitle:[NSDictionary] = []
@@ -18,6 +22,7 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
     var mode:String = ""
     var mode2:String = ""
     
+    var kurikaeshiID = 0
     var saveDateID: Date = Date()
     
     //画像のメンバ変数（画像のURLが入っている）
@@ -35,7 +40,7 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
     @IBOutlet weak var doneButton: UIBarButtonItem!//完了ボタン
     @IBOutlet weak var placeHolder: UILabel!//メモ欄プレースホルダー
     
-    let texts = ["通知なし","1回","10分","30分","1時間","毎日","毎週","毎月"]
+    let texts = ["なし","10分","30分","1時間","毎日","毎週","毎月"]
    
     //textviewがフォーカスされたら、メモ欄のプレースホルダーを非表示
     func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
@@ -43,19 +48,43 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
         placeHolder.isHidden = true
         return true
     }
-
+    
+    
+    // 改行ボタンを押した時の処理
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        // キーボードを隠す
+        titleLabel.resignFirstResponder()
+        return true
+    }
+    
     //textviewからフォーカスが外れて、TextViewが空だったらLabelを再び表示
     func textViewDidEndEditing(_ textView: UITextView) {
         
         if(txtView.text.isEmpty){
             placeHolder.isHidden = false
+        }else{
+            placeHolder.isHidden = true
         }
+        myDefault.set(txtView.text, forKey:"viewText")
+        
+        //plistファイルへの出力と同期する。
+        myDefault.synchronize()
+        
         // キーボードを隠す
         txtView.resignFirstResponder()
     }
 
     //タイトル欄の値が変わった時に呼び出される処理
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        //ラベルの文字列を保存する。
+        myDefault.set(titleLabel.text, forKey:"labelText")
+//        myDefault.set(txtView.text, forKey:"viewText")
+        
+        //plistファイルへの出力と同期する。
+        myDefault.synchronize()
+
+        
 //                完了ボタンの押せるか押せないか
             if titleLabel.text == ""{
                     doneButton.isEnabled = false
@@ -77,10 +106,30 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        
+        read()
+        
+        //デリゲート先を自分に設定する
+        titleLabel.delegate = self
+        txtView.delegate = self
+        
+        //文字列が保存されている場合はラベルに文字列を設定する。
+        if let labelText = myDefault.string(forKey: "labelText") {
+            titleLabel.text = labelText
+        }
+        if let viewText = myDefault.string(forKey:"viewText"){
+            txtView.text = viewText
+        }
+        
         if secondImage == ""{
             gazouLabel.isHidden = false
         }else{
             gazouLabel.isHidden = true
+        }
+        
+//                完了ボタンの押せるか押せないか
+        if titleLabel.text == ""{
+            doneButton.isEnabled = false
         }
         
         if txtView.text == ""{
@@ -89,15 +138,16 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
             placeHolder.isHidden = true
         }
         
-//                完了ボタンの押せるか押せないか
-        if titleLabel.text == ""{
-            doneButton.isEnabled = false
-        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        print("kurikaeshiIDの中身：\(kurikaeshiID)")
+        kurikaeshiPicker.selectRow(kurikaeshiID, inComponent: 0, animated: true)
+        kurikaeshiDetail.text = texts[kurikaeshiID]
     }
     
     //画像選択を押した時の処理
     @IBAction func tapImage(_ sender: UITapGestureRecognizer) {
-        print("イメージタップされたよ")
     }
     
     //フォアグラウンドで通知を出す機能
@@ -115,7 +165,7 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
         
         
         NotificationCenter.default.removeObserver(self)
-        
+        UserDefaults.standard.removePersistentDomain(forName: appDomain)
         
         //Appdelegateを使う用意をしておく（インスタンス化）
         let appDelegate: AppDelegate = UIApplication.shared.delegate as!AppDelegate
@@ -126,7 +176,7 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
         //ToDoエンティティオブジェクトを作成
         let ToDo = NSEntityDescription.entity(forEntityName: "TODO", in: viewContext)
         
-        //       通知諸々の処理ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+//       通知諸々の処理ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
         
         //いま選択されている日時を文字列に変換
         var targetDate = datePicker.date
@@ -146,26 +196,13 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
         
         //音設定
         content.sound = UNNotificationSound.default()
-        
-//        // 2
-//        let imageName = "applelogo"
-//
-//        let imageURL = URL(fileURLWithPath: secondImage)
-//
-//        let attachment = try! UNNotificationAttachment(identifier: "image.\(saveDateID)", url: imageURL, options: .none)
-//
-//        let fileURL = URL(fileURLWithPath: secondImage)
-//
-//        let attachment = UNNotificationAttachment(identifier: "image",
-//                                                  url: fileURL,
-//                                                  options: nil)
-        
-//        content.attachments = [attachment]
-        
+
         
         
         //トリガー設定（いつ発火するか。今回はDatepickerで指定した日時）
         //        let trigger = UNTimeIntervalNotificationTrigger.init(timeInterval: 10, repeats: false)
+        
+        
         var dc = Calendar.current.dateComponents(in: TimeZone.current, from: targetDate)
         
         var setDc = DateComponents()
@@ -179,8 +216,15 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
         
         let trigger = UNCalendarNotificationTrigger(dateMatching: setDc, repeats: false)
         
-        //リクエストの生成(通知IDをセット)
+        // 5分間隔ごと
+        let repeatTrigger = UNTimeIntervalNotificationTrigger(timeInterval: 300, repeats: true)
+        
+        //通知時間リクエストの生成(通知IDをセット)
         let request = UNNotificationRequest.init(identifier: "ID_SpecificTime.\(saveDateID)", content: content, trigger: trigger)
+        
+        //繰り返しリクエストの生成(通知IDをセット)
+        let repeatRequest = UNNotificationRequest.init(identifier: "ID_SpecificTime.\(saveDateID)", content: content, trigger: repeatTrigger)
+        
         
         //通知の設定
         let center = UNUserNotificationCenter.current()
@@ -188,7 +232,7 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
         
         
         print("saveDateID\(saveDateID)")
-        //        ここまで繰り返しの処理ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+//        ここまで繰り返しの処理ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
         
 
     
@@ -206,7 +250,7 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
         newRecord.setValue(Date(), forKey: "saveDate")      //saveDate列に現在日時をセット
         newRecord.setValue(titleLabel.text, forKey: "title")
         newRecord.setValue(secondImage, forKey:"image")
-        newRecord.setValue(Date(), forKey: "kurikaeshi")
+        newRecord.setValue(kurikaeshiID, forKey: "kurikaeshi")
         newRecord.setValue(datePicker.date, forKey: "time")
             
             //レコード（行）の即時保存
@@ -245,6 +289,7 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
                     record.setValue(txtView.text, forKey: "memo")
                     record.setValue(secondImage, forKey: "image")
                     record.setValue(datePicker.date, forKey: "time")
+                    record.setValue(kurikaeshiID, forKey: "kurikaeshi")
                     
                     //更新を即時保存
                     try viewContext.save()
@@ -261,6 +306,9 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
     
     //すでに存在するデータの読み込み処理
     func read(){
+        
+        
+        
         //一旦からにする（初期化）
         contentTitle = []
         
@@ -299,7 +347,7 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
             //きちんと保存できてるか、一行ずつ表示（デバッグエリア）
             for result: AnyObject in fetchResults {
                 let memo :String? = result.value(forKey:"memo") as? String
-                let kurikaeshi :Date? = result.value(forKey:"kurikaeshi") as? Date
+                let kurikaeshi :Int? = result.value(forKey:"kurikaeshi") as? Int
                 let title :String? = result.value(forKey: "title") as? String
                 let image :String? = result.value(forKey: "image") as? String
                 let saveDate :Date? = result.value(forKey:"saveDate") as? Date
@@ -308,10 +356,14 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
                 print("絞り込んだ結果")
                 print("title:\(title!) memo:\(memo!)kurikaeshi:\(kurikaeshi!)saveDate:\(saveDate!)time:\(time!),image:\(image!)")
                 
+                //メンバ変数にぶち込むkurikaeshiIDに
+                kurikaeshiID = kurikaeshi!
+                
                 //セルが押されて遷移してきた時に表示する内容
                 titleLabel.text = title
                 txtView.text = memo
                 datePicker.date = time!
+//                kurikaeshiDetail.text = kurikaeshi
                 
                 if mode == "Edit"{
                     secondImage = image!
@@ -360,7 +412,16 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        read()
+        // Delegate を設定
+        titleLabel.delegate = self
+        
+        // プレースホルダー
+        titleLabel.placeholder = "必須項目"
+        // テキストを全消去するボタンを表示
+        titleLabel.clearButtonMode = .always
+        // 改行ボタンの種類を変更
+        titleLabel.returnKeyType = .done
+        
         print("secondImageの中身:\(secondImage)")
         print("secondImageの中身\(secondImage)")
         print("デートピッカーの中身\(kurikaeshiDetail!)")
@@ -408,6 +469,7 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
     // pickerが選択された際に呼ばれるデリゲートメソッド.
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         kurikaeshiDetail.text = texts[row]
+        kurikaeshiID = row
     }
     
     //セグエを使って、
