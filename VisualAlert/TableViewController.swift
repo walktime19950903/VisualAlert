@@ -217,7 +217,7 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
         let trigger = UNCalendarNotificationTrigger(dateMatching: setDc, repeats: false)
         
         // 5分間隔ごと
-        let repeatTrigger = UNTimeIntervalNotificationTrigger(timeInterval: 300, repeats: true)
+        let repeatTrigger = UNTimeIntervalNotificationTrigger(timeInterval: 60, repeats: true)
         
         //通知時間リクエストの生成(通知IDをセット)
         let request = UNNotificationRequest.init(identifier: "ID_SpecificTime.\(saveDateID)", content: content, trigger: trigger)
@@ -229,7 +229,7 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
         //通知の設定
         let center = UNUserNotificationCenter.current()
         center.add(request){(error) in }
-        
+        center.add(repeatRequest){(error) in }
         
         print("saveDateID\(saveDateID)")
 //        ここまで繰り返しの処理ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
