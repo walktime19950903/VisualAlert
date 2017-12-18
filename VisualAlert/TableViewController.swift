@@ -107,7 +107,23 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
     
     override func viewWillAppear(_ animated: Bool) {
         
+        
+        
         read()
+        
+        
+        let center = UNUserNotificationCenter.current()
+        
+        // requestのIDで絞って消す
+        center.getPendingNotificationRequests { requests in
+            let identifiers = requests
+                .filter { $0.identifier == "\(self.saveDateID)"}
+                .map { $0.identifier }
+            center.removePendingNotificationRequests(withIdentifiers: identifiers)
+        }
+        
+        
+        
         
         //デリゲート先を自分に設定する
         titleLabel.delegate = self
@@ -141,9 +157,7 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        print("kurikaeshiIDの中身：\(kurikaeshiID)")
-        kurikaeshiPicker.selectRow(kurikaeshiID, inComponent: 0, animated: true)
-        kurikaeshiDetail.text = texts[kurikaeshiID]
+       
     }
     
     //画像選択を押した時の処理
@@ -165,13 +179,15 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
         
         let center = UNUserNotificationCenter.current()
         
-        center.getPendingNotificationRequests { (requests: [UNNotificationRequest]) in
-            for request in requests {
-                if self.saveDateID != nil {
-                    center.removePendingNotificationRequests(withIdentifiers: [request.identifier])
-                }
-            }
-        }
+    
+        
+//        // requestのIDで絞って消す
+//        center.getPendingNotificationRequests { requests in
+//            let identifiers = requests
+//                .filter { $0.identifier == "\(self.saveDateID)"}
+//                .map { $0.identifier }
+//            center.removePendingNotificationRequests(withIdentifiers: identifiers)
+//        }
         
         
         
@@ -208,9 +224,6 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
         content.sound = UNNotificationSound.default()
 
         
-        //トリガー設定（いつ発火するか。今回はDatepickerで指定した日時）
-        //        let trigger = UNTimeIntervalNotificationTrigger.init(timeInterval: 10, repeats: false)
-        
         
         var dc = Calendar.current.dateComponents(in: TimeZone.current, from: targetDate)
         
@@ -225,17 +238,19 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
         
         let trigger = UNCalendarNotificationTrigger(dateMatching: setDc, repeats: true)
         
-        // 5分間隔ごと
-//        let repeatTrigger = UNTimeIntervalNotificationTrigger(timeInterval: 60, repeats: true)
         
         //通知時間リクエストの生成(通知IDをセット)
         let request = UNNotificationRequest.init(identifier: "\(saveDateID)", content: content, trigger: trigger)
         
         
+//        center.getPendingNotificationRequests { (requests: [UNNotificationRequest]) in
+//            for request in requests {
+//                if self.saveDateID != nil {
+//                    center.removePendingNotificationRequests(withIdentifiers: [request.identifier])
+//                }
+//            }
+//        }
         
-        
-//        //繰り返しリクエストの生成(通知IDをセット)
-//        let repeatRequest = UNNotificationRequest.init(identifier: "ID_SpecificTime.\(saveDateID)", content: content, trigger: repeatTrigger)
         
         
 //        //通知の設定
@@ -375,6 +390,8 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
                 titleLabel.text = title
                 txtView.text = memo
                 datePicker.date = time!
+                
+                
 //                kurikaeshiDetail.text = kurikaeshi
                 
                 if mode == "Edit"{
@@ -424,6 +441,7 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
         // Delegate を設定
         titleLabel.delegate = self
         
@@ -436,7 +454,7 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
         
         print("secondImageの中身:\(secondImage)")
         print("secondImageの中身\(secondImage)")
-        print("デートピッカーの中身\(kurikaeshiDetail!)")
+        
         
         datePickerChanged()
  
@@ -446,9 +464,9 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
         print("TableViewController表示されたよ")
         print("受け取った行番号\(passedIndex)")
         
-        kurikaeshiPicker.delegate = self as! UIPickerViewDelegate
-        kurikaeshiPicker.dataSource = self as! UIPickerViewDataSource
+    
         }
+
 
     
 

@@ -91,7 +91,7 @@ class PictureViewController: UIViewController,UIImagePickerControllerDelegate,UI
                 let time :Date? = result.value(forKey:"time") as? Date
                 
                 
-                print("title:\(title!),memo:\(memo!),saveDate:\(saveDate!),time:\(time!),kurikaeshi:\(kurikaeshi!),image:\(image!)")
+                print("title:\(title!),memo:\(memo!),saveDate:\(saveDate!),time:\(time!),image:\(image!)")
                 
                 var dic = ["memo":memo,"title":title,"saveDate":saveDate,"time":time,"kurikaeshi":kurikaeshi,"image":image] as[String : Any]
                 contentTitle.append(dic as NSDictionary)

@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "VisualAlert/TableViewController.swift"
-            timestampString = "535002929.303929"
+            timestampString = "535220418.68773"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "168"
-            endingLineNumber = "168"
+            startingLineNumber = "182"
+            endingLineNumber = "182"
             landmarkName = "tapSave(_:)"
             landmarkType = "7">
             <Locations>
@@ -26,11 +26,11 @@
                   moduleName = "VisualAlert"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/user/Documents/VisualAlert/VisualAlert/TableViewController.swift"
-                  timestampString = "535002156.822724"
+                  timestampString = "535216558.649456"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "168"
-                  endingLineNumber = "168"
+                  startingLineNumber = "174"
+                  endingLineNumber = "174"
                   offsetFromSymbolStart = "150">
                </Location>
                <Location
@@ -41,12 +41,12 @@
                   moduleName = "VisualAlert"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/user/Documents/VisualAlert/VisualAlert/TableViewController.swift"
-                  timestampString = "535002156.828431"
+                  timestampString = "535216558.655174"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "169"
-                  endingLineNumber = "169"
-                  offsetFromSymbolStart = "29">
+                  startingLineNumber = "175"
+                  endingLineNumber = "175"
+                  offsetFromSymbolStart = "32">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -58,12 +58,60 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "VisualAlert/TableViewController.swift"
-            timestampString = "535002929.331896"
+            timestampString = "535220418.694052"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "170"
-            endingLineNumber = "170"
-            landmarkName = "tapSave(_:)"
+            startingLineNumber = "120"
+            endingLineNumber = "120"
+            landmarkName = "viewWillAppear(_:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Array&lt;__ObjC.UNNotificationRequest&gt;) -&gt; () in VisualAlert.TableViewController.viewWillAppear(Swift.Bool) -&gt; ()"
+                  moduleName = "VisualAlert"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/user/Documents/VisualAlert/VisualAlert/TableViewController.swift"
+                  timestampString = "535217894.96714"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "120"
+                  endingLineNumber = "120"
+                  offsetFromSymbolStart = "106">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (__ObjC.UNNotificationRequest) -&gt; Swift.Bool in closure #1 (Swift.Array&lt;__ObjC.UNNotificationRequest&gt;) -&gt; () in VisualAlert.TableViewController.viewWillAppear(Swift.Bool) -&gt; ()"
+                  moduleName = "VisualAlert"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/user/Documents/VisualAlert/VisualAlert/TableViewController.swift"
+                  timestampString = "535217894.981017"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "120"
+                  endingLineNumber = "120"
+                  offsetFromSymbolStart = "21">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "VisualAlert/TableViewController.swift"
+            timestampString = "535220418.694631"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "122"
+            endingLineNumber = "122"
+            landmarkName = "viewWillAppear(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
