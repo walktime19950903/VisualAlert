@@ -4,8 +4,9 @@ import Photos
 import MobileCoreServices
 import CoreData
 
-class PictureViewController: UIViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate  {
+class PictureViewController: UIViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate {
 
+    
     @IBOutlet weak var pictureImageView: UIImageView! //でかい方のImageView
     @IBOutlet weak var nextButton: UIButton!
     
@@ -26,23 +27,27 @@ class PictureViewController: UIViewController,UIImagePickerControllerDelegate,UI
         
         read()
         
+        
+        if secondImage != ""{
+            let url = URL(string: secondImage as String!)
+            let fetchResult: PHFetchResult = PHAsset.fetchAssets(withALAssetURLs: [url!], options: nil)
+            let asset: PHAsset = (fetchResult.firstObject! as PHAsset)
+            let manager: PHImageManager = PHImageManager()
+            manager.requestImage(for: asset,targetSize: CGSize(width: 375, height: 563),contentMode: .aspectFill,options: nil) { (image, info) -> Void in
+                self.pictureImageView.image = image
+            }
+        }
+        
         print("pictureviewcontrollerのmodeの中身\(mode)")
         print("pictureviewcontrollerのmode2の中身\(mode2)")
         
-//        if mode == "Edit2"{
         
-            if secondImage != ""{
-                let url = URL(string: secondImage as String!)
-                let fetchResult: PHFetchResult = PHAsset.fetchAssets(withALAssetURLs: [url!], options: nil)
-                let asset: PHAsset = (fetchResult.firstObject! as PHAsset)
-                let manager: PHImageManager = PHImageManager()
-                manager.requestImage(for: asset,targetSize: CGSize(width: 375, height: 563),contentMode: .aspectFill,options: nil) { (image, info) -> Void in
-                    self.pictureImageView.image = image
-                }
-            }
-//        }
         
     }
+
+    
+    
+
     
     override func viewWillAppear(_ animated: Bool) {
         if secondImage != ""{
@@ -52,12 +57,15 @@ class PictureViewController: UIViewController,UIImagePickerControllerDelegate,UI
         
         read()
         
+        
         //角の丸み　border-radius
         nextButton.layer.cornerRadius = 15
     }
     
     //すでに存在するデータの読み込み処理
     func read(){
+        
+        
         //一旦からにする（初期化）
         contentTitle = []
         
@@ -93,7 +101,7 @@ class PictureViewController: UIViewController,UIImagePickerControllerDelegate,UI
                 
                 print("title:\(title!),memo:\(memo!),saveDate:\(saveDate!),time:\(time!),image:\(image!)")
                 
-                var dic = ["memo":memo,"title":title,"saveDate":saveDate,"time":time,"kurikaeshi":kurikaeshi,"image":image] as[String : Any]
+                var dic = ["memo":memo,"title":title,"saveDate":saveDate,"time":time,"kurikaeshi":kurikaeshi,   "image":image] as[String : Any]
                 contentTitle.append(dic as NSDictionary)
             }
         }catch{
@@ -177,12 +185,15 @@ class PictureViewController: UIViewController,UIImagePickerControllerDelegate,UI
         }
         
         
-        //撮影した後のViewにImageを入れる処理
-        let takenImage = info[UIImagePickerControllerOriginalImage]! as! UIImage
-        pictureImageView.image = takenImage
+        
 
         //撮影した写真のURLを取得する処理
         if cameramode == "satsueimode" {
+            
+            //撮影した後のViewにImageを入れる処理
+            let takenImage = info[UIImagePickerControllerOriginalImage]! as! UIImage
+            pictureImageView.image = takenImage
+            
         PHPhotoLibrary.shared().performChanges({
             var  createAssetRequest = PHAssetChangeRequest.creationRequestForAsset(from: takenImage)
             

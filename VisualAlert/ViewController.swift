@@ -186,7 +186,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
             let fetchResult: PHFetchResult = PHAsset.fetchAssets(withALAssetURLs: [url!], options: nil)
             let asset: PHAsset = (fetchResult.firstObject! as PHAsset)
             let manager: PHImageManager = PHImageManager()
-            manager.requestImage(for: asset,targetSize: CGSize(width: 74, height: 71),contentMode: .aspectFill,options: nil) { (image, info) -> Void in
+            manager.requestImage(for: asset,targetSize: CGSize(width: 76, height: 73),contentMode: .aspectFill,options: nil) { (image, info) -> Void in
                 cell.cellImage.image = image
                 cell.titleLabel.text = dic["title"] as! String
                 
