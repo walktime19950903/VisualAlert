@@ -6,7 +6,7 @@ import UserNotifications //ローカル通知に必要なフレームワーク
 //import AssetsLibrary
 
 
-class TableViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UITextViewDelegate,UITextFieldDelegate,UNUserNotificationCenterDelegate {
+class TableViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate,UITextFieldDelegate,UNUserNotificationCenterDelegate {
 
     
     //UserDefaultを操作するためのオブジェクトを作成
@@ -112,15 +112,15 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
         read()
         
         
-        let center = UNUserNotificationCenter.current()
-        
-        // requestのIDで絞って消す
-        center.getPendingNotificationRequests { requests in
-            let identifiers = requests
-                .filter { $0.identifier == "\(self.saveDateID)"}
-                .map { $0.identifier }
-            center.removePendingNotificationRequests(withIdentifiers: identifiers)
-        }
+//        let center = UNUserNotificationCenter.current()
+//
+//        // requestのIDで絞って消す
+//        center.getPendingNotificationRequests { requests in
+//            let identifiers = requests
+//                .filter { $0.identifier == "\(self.saveDateID)"}
+//                .map { $0.identifier }
+//            center.removePendingNotificationRequests(withIdentifiers: identifiers)
+//        }
         
         
         
@@ -238,6 +238,7 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
         
         let trigger = UNCalendarNotificationTrigger(dateMatching: setDc, repeats: true)
         
+        saveDateID = Date()
         
         //通知時間リクエストの生成(通知IDをセット)
         let request = UNNotificationRequest.init(identifier: "\(saveDateID)", content: content, trigger: trigger)
@@ -256,6 +257,8 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
 //        //通知の設定
 //        let center = UNUserNotificationCenter.current()
 //        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ["\(saveDateID)"])
+        
+        
         center.add(request){(error) in }
         
         print("saveDateID\(saveDateID)")
@@ -441,7 +444,7 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        txtView.delegate = self
         // Delegate を設定
         titleLabel.delegate = self
         
@@ -485,22 +488,22 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
         datePickerChanged()
     }
     
-    // pickerの列の数
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
+//    // pickerの列の数
+//    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+//        return 1
+//    }
 
-    //pickerに表示する値を返すデリゲートメソッド.
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return texts[row]
-    }
-
-
-    // pickerが選択された際に呼ばれるデリゲートメソッド.
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        kurikaeshiDetail.text = texts[row]
-        kurikaeshiID = row
-    }
+//    //pickerに表示する値を返すデリゲートメソッド.
+//    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+//        return texts[row]
+//    }
+//
+//
+//    // pickerが選択された際に呼ばれるデリゲートメソッド.
+//    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+//        kurikaeshiDetail.text = texts[row]
+//        kurikaeshiID = row
+//    }
     
     //セグエを使って、
     override func prepare(for segue: UIStoryboardSegue,sender: Any?) {
