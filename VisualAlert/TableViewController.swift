@@ -71,6 +71,7 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
         myDefault.synchronize()
         
         // キーボードを隠す
+        
         txtView.resignFirstResponder()
     }
 
@@ -110,19 +111,6 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
         
         
         read()
-        
-        
-//        let center = UNUserNotificationCenter.current()
-//
-//        // requestのIDで絞って消す
-//        center.getPendingNotificationRequests { requests in
-//            let identifiers = requests
-//                .filter { $0.identifier == "\(self.saveDateID)"}
-//                .map { $0.identifier }
-//            center.removePendingNotificationRequests(withIdentifiers: identifiers)
-//        }
-        
-        
         
         
         //デリゲート先を自分に設定する
@@ -179,8 +167,6 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
         
         let center = UNUserNotificationCenter.current()
         
-    
-        
 //        // requestのIDで絞って消す
 //        center.getPendingNotificationRequests { requests in
 //            let identifiers = requests
@@ -202,64 +188,12 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
         //ToDoエンティティオブジェクトを作成
         let ToDo = NSEntityDescription.entity(forEntityName: "TODO", in: viewContext)
         
-//       通知諸々の処理ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
-        
-        //いま選択されている日時を文字列に変換
-        var targetDate = datePicker.date
-        
-        var df = DateFormatter()
-        df.dateFormat = "yyyy/MM/dd hh:mm:00"
-        
-        var strDate = df.string(from: targetDate)
-        
-        //Notificationのインスタンス作成
-        let content = UNMutableNotificationContent()
-        //タイトル設定
-        content.title = "タイトル：\(titleLabel.text!)"
-        
-        //本文設定
-        content.body = "メモ内容：\(txtView.text!)"
-        
-        //音設定
-        content.sound = UNNotificationSound.default()
-
-        
-        
-        var dc = Calendar.current.dateComponents(in: TimeZone.current, from: targetDate)
-        
-        var setDc = DateComponents()
-        setDc.year = dc.year!
-        setDc.month = dc.month!
-        setDc.day = dc.day!
-        
-        setDc.hour = dc.hour!
-        setDc.minute = dc.minute!
-        setDc.second = 0
-        
-        let trigger = UNCalendarNotificationTrigger(dateMatching: setDc, repeats: true)
-        
-        saveDateID = Date()
-        
-        //通知時間リクエストの生成(通知IDをセット)
-        let request = UNNotificationRequest.init(identifier: "\(saveDateID)", content: content, trigger: trigger)
-        
-        
-//        center.getPendingNotificationRequests { (requests: [UNNotificationRequest]) in
-//            for request in requests {
-//                if self.saveDateID != nil {
-//                    center.removePendingNotificationRequests(withIdentifiers: [request.identifier])
-//                }
-//            }
-//        }
-        
-        
-        
 //        //通知の設定
 //        let center = UNUserNotificationCenter.current()
 //        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ["\(saveDateID)"])
         
         
-        center.add(request){(error) in }
+        
         
         print("saveDateID\(saveDateID)")
 //        ここまで繰り返しの処理ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
@@ -275,9 +209,10 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
         //どのエンティティからデータを取得してくるか設定（ToDoエンティティ）
         let query:NSFetchRequest<TODO> = TODO.fetchRequest()
             
+        saveDateID = Date()
         //値のセット
         newRecord.setValue(txtView.text, forKey: "memo")  //title列に文字をセット
-        newRecord.setValue(Date(), forKey: "saveDate")      //saveDate列に現在日時をセット
+        newRecord.setValue(saveDateID, forKey: "saveDate")      //saveDate列に現在日時をセット
         newRecord.setValue(titleLabel.text, forKey: "title")
         newRecord.setValue(secondImage, forKey:"image")
         newRecord.setValue(kurikaeshiID, forKey: "kurikaeshi")
@@ -296,13 +231,24 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
             //どのエンティティからデータを取得してくるか設定（ToDoエンティティ）
             let query:NSFetchRequest<TODO> = TODO.fetchRequest()
             
+            saveDateID = selectDate
             
             //絞り込み検索（ここを追加！！！！！！）---------------------------------
             //絞り込みの条件　saveDate = %@ のsaveDateはattribute名
             let saveDatePredicate = NSPredicate(format: "saveDate = %@", selectDate as CVarArg)
             query.predicate = saveDatePredicate
-            
             //----------------------------------------------------------------
+            
+            center.removePendingNotificationRequests(withIdentifiers: ["\(saveDateID)"])
+            
+//            center.getPendingNotificationRequests { (requests: [UNNotificationRequest]) in
+//                for request in requests {
+//                    if self.saveDateID != nil {
+//                        center.removePendingNotificationRequests(withIdentifiers: [request.identifier])
+//                    }
+//                }
+//            }
+            
             //レコード（行）の即時保存
             do{
                 //データを一括取得
@@ -328,7 +274,55 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
                 //エラーが発生したときに行う例外処理を書いておく場所
             }
         }
+        
+        //       通知諸々の処理ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+        
+        
+        
+        //いま選択されている日時を文字列に変換
+        var targetDate = datePicker.date
+        
+        var df = DateFormatter()
+        df.dateFormat = "yyyy/MM/dd hh:mm:00"
+        
+        var strDate = df.string(from: targetDate)
+        
+        //Notificationのインスタンス作成
+        let content = UNMutableNotificationContent()
+        //タイトル設定
+        content.title = "タイトル：\(titleLabel.text!)"
+        
+        //本文設定
+        content.body = "メモ内容：\(txtView.text!)"
+        
+        //音設定
+        content.sound = UNNotificationSound.default()
+        
+        
+        
+        var dc = Calendar.current.dateComponents(in: TimeZone.current, from: targetDate)
+        
+        var setDc = DateComponents()
+        setDc.year = dc.year!
+        setDc.month = dc.month!
+        setDc.day = dc.day!
+        
+        setDc.hour = dc.hour!
+        setDc.minute = dc.minute!
+        setDc.second = 0
+        
+        let trigger = UNCalendarNotificationTrigger(dateMatching: setDc, repeats: false)
+        
+        
+        
+        //通知時間リクエストの生成(通知IDをセット)
+        let request = UNNotificationRequest.init(identifier: "\(saveDateID)", content: content, trigger: trigger)
+        
+        
+        
 
+        center.add(request){(error) in }
+        
         //最初の画面に戻る
         self.navigationController?.popToRootViewController(animated: true)
       }
@@ -477,6 +471,10 @@ class TableViewController: UITableViewController, UIImagePickerControllerDelegat
         detailLabel.text = DateFormatter.localizedString(from: datePicker.date, dateStyle: DateFormatter.Style.short, timeStyle: DateFormatter.Style.short)
     }
 
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // キーボードを隠す
+        txtView.resignFirstResponder()
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
